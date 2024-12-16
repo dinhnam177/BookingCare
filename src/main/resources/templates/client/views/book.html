@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{client/masterLayout.html}">
+<head>
+<meta charset="UTF-8">
+<title>Đặt lịch khám</title>
+<link rel="stylesheet" th:href="@{/client/css/duoiSlider.css}">
+</head>
+<body>
+
+	<div class="content__search" layout:fragment="content">
+          <div class="content__search-heading">
+                <a href="/home" class="fas fa-arrow-left icons-back"></a>
+                <p>Đặt Lịch Khám </p>
+            </div>
+          
+
+                <div class="heading-book">
+                    <img th:src="${userDto.img}" alt="" style="height:157px ; ">
+                    <div class="book-body">
+                        <h2>ĐẶT LỊCH KHÁM</h2>
+                         <p class="dotor-book" th:utext="'Bác sĩ chuyên khoa: '+${userDto.name}"></p>
+                        <th:block th:each="itemWk : ${userDto.lstWorkTime}">
+                        <th:block th:if="${itemWk.id}==${idWorktime}">
+                         <input type="hidden" name="" id="wkTime"  th:value="${itemWk.time}" >
+                        <p class="time-book" th:utext="@{{time}, ngày {date}(time=${itemWk.time}, date=${date})}"></p>
+                        </th:block>
+                        </th:block>
+                    </div>
+                </div>
+
+	<form action=""  class="form" method="POST" id="bookingForm">
+	<!--  action="/api/booking"  -->
+                <div class="book-input">
+                    <input type="radio" name="bookFor" checked="checked" class="nguoi" onclick="check()" ><span class="cho-minh">Đặt cho mình </span>
+                     <input type="radio" name="bookFor" class="nguoi" id="nguoiThan" onclick="check()"><span class="cho-nguoi">Đặt cho  Người Thân</span>
+                </br>	
+                 <div class="hide-cho-nguoi">
+                 <input type="text" name="nameScheduler" class="input__book" placeholder="Họ tên Người đặt lịch (Băt Buộc)"  id="nameScheduler">
+                <input type="text" name="phoneScheduer" class="input__book" placeholder="Số điện thoại  (Băt Buộc)" id="phoneScheduer"  >
+                 </div>
+
+                    <input type="text" class="input__book chominh-hide " name="namePatient" placeholder="Họ tên Bệnh Nhân (Băt Buộc)" id="" required>
+                    </br>
+                    <label for="">Ghi rõ Họ và Tên , Viết Hoa nhưng chữ cái  đầu tiên ,Ví dụ: Đỗ Văn Nam </label>
+				
+					<br></br>
+                    <div class="input-render">
+                        <input type="radio" name="sex"  checked="checked" class="abc" value="Name"><span>Nam</span>
+                        <input type="radio" name="sex"   class="abc"  value="Nữ"><span>Nữ</span>
+                    </div>
+                    
+                    <input type="text" name="phonePatient"   class="input__book minh-an " placeholder="Số điện thoại liên hệ (Băt Buộc )" required pattern="(\+84|0)\d{9,10}">
+                <input type="number"  class="input__book" name="yearOfBirth" placeholder="Năm sinh (Bắt Buộc)" required>
+                  <!--   <input type="text"  class="input__book" placeholder="Điền Quận huyện "> -->
+                    <input type="text" name="location"  class="input__book" placeholder="Địa Chỉ  " required>
+                    <textarea  placeholder="Lý Do Khám " name="reason" id="" cols="30" rows="5" required></textarea>
+                      <input type="hidden" name="idDoctor" id="idDoctor" th:value="${userDto.id}" >
+                      <input type="hidden" name="idWorktime"  th:value="${idWorktime}" >
+                      <input type="hidden" name="date" id="date"  th:value="${date}" >
+
+        
+                     <div class="input-render">
+                        <input type="radio" name="type"  checked="checked" value="off"><span>Khám tại cơ sở</span>
+                        <th:block th:if="${#session?.getAttribute('userDetails')}">
+                         <input type="hidden" name="" id="idUser"  th:value="${#session.getAttribute('userDetails').id}" >
+                        <input type="radio" name="type"     value="on" id="bookOn"><span>Tư vấn online</span>
+                        </th:block>
+                    </div>
+                    <button >Xác Nhận Đặt Khám</button>
+                    <label for="">Bằng việc xác nhận đặt khám, bạn đã hoàn toàn đồng ý với  Điều Khoản dịch vụ của  chúng tôi</label>
+		
+
+                </div>
+                </form>
+   
+	</div>
+	<div class="space"></div>
+	 <script layout:fragment="js" th:src="@{/client/js/book.js}"></script>
+
+
+</body>
+</html>

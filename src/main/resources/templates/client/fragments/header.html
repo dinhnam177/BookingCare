@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<meta charset="ISO-8859-1">
+<head>
+<title>Insert title here</title>
+</head>
+<body>
+<div  th:fragment="header">
+	<header class="header">
+		<div class="grid wide">
+			<div class="header_nav">
+				<div class="icon-bar">
+					<i class="fas fa-bars bar"></i>
+				</div>
+				<a href="/home" class="header_nav-logo"> <img
+					th:src="@{client/img/bookingCare.png}" alt=""> <!-- <a href="#" class="header_nav-logo-link"> <span>B</span>ookingCare</a> -->
+				</a>
+
+				<div class="header_nav-list hide-on-tablet-mobile">
+					<div class="header_nav-item">
+						<a href="/chuyen-khoa" class="header_nav-link">Chuyên Khoa</a> <span>Tìm
+							bác sĩ theo chuyên khoa</span>
+					</div>
+
+					<div class="header_nav-item">
+						<a href="/benh-vien" class="header_nav-link">Cơ Sở Y Tế</a> <span>Chọn
+							bệnh viện phòng khám</span>
+					</div>
+
+					<div class="header_nav-item">
+						<a href="/bac-si" class="header_nav-link">Bác
+							Sĩ </a> <span>Chọn bác sĩ giỏi</span>
+					</div>
+
+					<div class="header_nav-item">
+						<a href="/cam-nang" class="header_nav-link">Cẩm nang</a> <span>Khám
+							sức khỏe tổng quát</span>
+					</div>
+				</div>
+
+				<div class="header_nav_login">
+					<div class="login-list" th:unless="${#session?.getAttribute('userDetails')}">
+						<a href="/login" class="login-item js-dangNhap">Đăng Nhập</a> <a
+							href="/register" class="login-item js-dangKy">Đăng Ký</a>
+					</div>
+					<th:block th:if="${#session?.getAttribute('userDetails')}">
+
+					<div class="login-list" >
+					
+						<a href="#" class="login-item js-dangNhap" id="test"
+							th:utext="${#session?.getAttribute('userDetails').fullName}"></a>
+							
+							<input type="hidden"
+							id="idUser" th:value="${#session?.getAttribute('userDetails').id}"> <a
+							href="/logout" class="login-item js-dangKy">Đăng xuất</a>
+					</div>
+					<th:block th:if="${#session?.getAttribute('userDetails').roles.contains('ROLE_USER')}">
+					 <div class="update__Thongtin">
+                            <ul class="list__thongtin">
+                                <li class="thongtin__item">
+                                    <a href="/updateProfile">Cập Nhật Thông Tin</a>     
+                                </li>
+                                <li class="thongtin__item">
+                                    <a href="/showMedical">Xem Lịch Khám</a>
+                                </li>
+                                <li class="thongtin__item">
+                                    <a href="/myMessage">Tin nhắn</a>
+                                </li>
+                            </ul>
+                        </div>
+                        </th:block>
+                        
+                        <th:block th:unless="${#session?.getAttribute('userDetails').roles.contains('ROLE_USER')}">
+					 <div class="update__Thongtin">
+                            <ul class="list__thongtin">
+                                <li class="thongtin__item">
+                                 <th:block th:if="${#session?.getAttribute('userDetails').roles.contains('ROLE_ADMIN')}">
+                                    <a href="/admin/home">Chuyển tới giao diện admin</a>    
+                                    </th:block> 
+                                    <th:block th:unless="${#session?.getAttribute('userDetails').roles.contains('ROLE_ADMIN')}">
+                                    <a href="/doctor/home">Chuyển tới giao diện doctor</a>    
+                                    </th:block> 
+                                </li>
+                              
+                            </ul>
+                        </div>
+                        </th:block>
+					</th:block>
+				</div>
+			</div>
+			<th:block th:if="${alert}">
+		<div class="alert alert-success" role="alert" th:utext="${alert}"></div>
+			</th:block>
+		</div>
+		 
+	</header>
+	<!--  <div class="Notification">
+            <p class="Notification-item">this a primary alert-check out</p>
+            <p class="Notification-item red">this a primary alert-check out</p>
+        </div> -->
+        </div>
+</body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{client/masterLayout.html}">
+<head>
+<meta charset="ISO-8859-1">
+<title>Trang chủ</title>
+<link rel="stylesheet" th:href="@{/client/css/message.css}">
+</head>
+<body>
+<div layout:fragment="messageClient" th:replace="client/fragments/messageClient::messageClient"></div>
+<div layout:fragment="slider" th:replace="client/fragments/slider::slider"></div>
+<div class="content" layout:fragment="content">
+            <!-- Dau  tiên  -->
+            <div class="slider_bottom">
+                <div class="grid wide">
+                    <div class="row">
+                        <div class="col l-2 m-4 c-6">
+                            <a  href="/chuyen-khoa" class="slider_list">
+                                <div href="" class="slider_list-link">
+                                    <i class="fas fa-house-user"></i>
+                                </div>
+                                <p class="slider-list-text">Khám Chuyên Khoa</p>
+                            </a>
+                        </div>
+
+                        <div class="col l-2 m-4 c-6">
+                            <a  href="" class="slider_list">
+                                <div href="" class="slider_list-link">
+                                    <i class="fas fa-phone-volume"></i>
+                                </div>
+                                <p class="slider-list-text">Khám Từ Xa</p>
+                            </a>
+                        </div>
+
+                        <div class="col l-2 m-4 c-6">
+                            <a  href="" class="slider_list">
+                                <div href="" class="slider_list-link">
+                                    <i class="fas fa-hand-holding-medical"></i>
+                                </div>
+                                <p class="slider-list-text">Khám bao Quát</p>
+                            </a>
+                        </div>
+
+                        <div class="col l-2 m-4 c-6">
+                            <a  href=""  class="slider_list">
+                                <div href="" class="slider_list-link">
+                                    <i class="fas fa-assistive-listening-systems"></i>
+                                </div>
+                                <p class="slider-list-text">Xét Nghiệm Y Học</p>
+                            </a>
+                        </div>
+                        <div class="col l-2 m-4 c-6">
+                            <a  href=""  class="slider_list">
+                                <div href="" class="slider_list-link">
+                                    <i class="fas fa-chalkboard-teacher"></i>
+                                </div>
+                                <p class="slider-list-text">Sức Khỏe Tinh  Thần</p>
+                            </a>
+                        </div>
+                        <div class="col l-2 m-4 c-6">
+                            <a  href="" class="slider_list">
+                                <div href="" class="slider_list-link">
+                                    <i class="fas fa-tooth"></i>
+                                </div>
+                                <p class="slider-list-text">Khám Nha Khoa</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Khám bệnh  -->
+            <div class="grid wide">
+                <div class="content__slider-img">
+                <!--lstCamNangRandom  -->
+                <th:block th:each="item : ${lstCamNangRandom}">
+                         <a th:href="@{/cam-nang/{id}(id=${item.id})}" class="content__list-item">
+                            <div class="content-img">
+                                <img th:src="${item.img}" alt="">
+                            </div>
+                            <div class="content__body">
+                                <h3 class="content__heading-1" th:utext="${item.title}"></h3>
+                                <ul class="content__des">
+                                
+                                </ul>
+                            </div>
+                            <div class="content-labe">
+                                <span></span>
+                            </div>
+                        </a>
+                </th:block>
+                       
+
+                       
+                </div>
+            </div>
+
+            <!--chuyên khoa phổ  biến -->
+            <div class="content1">
+                <div class="grid wide">
+                    <div class="content__heading">
+                        <p class="heading">Chuyên Khoa Phổ Biến </p>
+                        <a href="/chuyen-khoa" class="heading__search">Xem Thêm  </a>
+                    </div>
+                    
+                    <div class="content__list-video">
+                    
+                    <th:block th:each="item : ${lstChuyenKhoa}">
+                    
+                    <a  th:href="@{/chuyen-khoa/{id}(id=${item.id})}" class="content__video-item">
+                            <div class="content__video-item-img">
+                                <img  th:src="${item.img}" alt="">
+                            </div>
+                            <p class="content__video-des" th:utext="${item.name}">Bệnh Viêm Gan</p>
+                        </a>
+                    
+               
+                </th:block>
+                       
+                    </div>
+                </div>
+            </div>
+            <!-- cơ cở ý tế nổi bật  -->
+           <div class="content2">
+                <div class="grid wide">
+                    <div class="content__heading">
+                        <p class="heading">Cơ Sở Y Tế Nổi Bật</p>
+                        <a href="/benh-vien" class="heading__search">Tìm Kiếm </a>
+                    </div>
+                    <div class="content__list-video">
+                     <th:block th:each="item : ${lstBenhVien}">
+                      <a th:href="@{/benh-vien/{id}(id=${item.id})}"  class="content__video-item">
+                            <div class="content__video-item-img">
+                                <img th:src="${item.img}" alt="">
+                            </div>
+                            <p class="content__video-des" th:utext="${item.name}"></p>
+                        </a>
+                </th:block>
+                       
+                    </div>
+                </div>
+            </div> 
+            <!-- đội ngũ chuyên gia  lstBacsi -->
+            <div class="content3">
+                <div class="grid wide">
+                    <div class="content__heading">
+                        <p class="heading">Đội Ngũ Chuyên Gia</p>
+                        <a  href="/bac-si" class="heading__search">Tìm Kiếm </a>
+                    </div>
+                    <div class="content__list-video">
+                    
+                     <th:block th:each="item : ${lstBacsi}">
+                     <a th:href="@{/bac-si/{id}(id=${item.id})}" class="content__doctor">
+                            <div class="content__doctor-item">
+                                <img th:src="${item.img}" alt="">
+                            </div>
+                            <p class="des-doctor" th:utext="${item.name}"></p> 	
+                            <p class="content__doctor-des" th:utext="'Chuyên khoa:'+ ${item.SpecializedName}"></p>
+                        </a>
+                     </th:block>
+                        
+                       
+                    </div>
+                </div>
+            </div> 
+            <!-- Cẩm Nang -->
+            <div class="content4">
+                <div class="grid wide">
+                    <div class="content__heading">
+                        <p class="heading">Cẩm Nang</p>
+                        <a href="/cam-nang" class="heading__search">Tất Cả bài Viết </a>
+                    </div>
+                    <div class="content__list-handbook">
+                    
+                    <th:block th:each="item : ${lstCamNang}">
+                    <a th:href="@{/cam-nang/{id}(id=${item.id})}" class="content__handbook">
+                            <div class="content__handbook-item">
+                                <img src="https://res.cloudinary.com/dtvkhopoe/image/upload/v1643638341/h1_whvkbh.jpg" alt="">
+                                <p class="content__handbook-text" th:utext="${item.title}"></p>
+                            </div>
+                        </a>
+                </th:block>
+                    
+                       
+                       
+                    </div>
+                </div>
+            </div> 
+
+            <!-- tải ứng dụng  -->
+            <div class="content5">
+                <div class="grid wide">
+                    <!-- <div class="row"> -->
+                        <!-- <div class="col l-o-3 m-o-3 c-o-3"> -->
+                            <div class="content__bookingcare">
+                                <img th:src="@{client/img/app.PNG}" alt="" class="content__bookingcare-img">
+                                <div class="content__bookingcare-body">
+                                    <h2 class="content__bookingcare-heading">Tải Ứng Dụng BookingCare</h2>
+                                    <ul class="content__bookingcare-list">
+                                        <li class="content__bookingcare-item">
+                                            <i class="fas fa-check"></i>
+                                            Đặt Lịch Khám Nhanh Hơn </li>
+                                        <li class="content__bookingcare-item">
+                                            <i class="fas fa-check"></i>
+                                            Nhận Thông Báo Từ Hệ Thống</li>
+                                        <li class="content__bookingcare-item">
+                                            <i class="fas fa-check"></i>
+                                            Nhận Hướng Dẫn Đi Khám Chi Tiết </li>
+                                    </ul>
+                                    <a  href="" class="bookingcare-install">
+                                        <img src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg//assets/39f189e19764dab688d3850742f13718.png" alt="" class="bookingcare-install-img1">
+                                        <img src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg//assets/f4f5426ce757aea491dce94201560583.png" alt="" class="bookingcare-install-img2">
+                                    </a>
+                                    <a href="" class="link">
+                                        Hoặc mở liên kết :<strong>https://bookingcare.vn/app</strong>
+                                    </a>
+                                </div>
+                            </div>
+                        <!-- </div> -->
+                    <!-- </div> -->
+
+                </div>
+            </div>
+           
+
+        </div>
+     <script layout:fragment="js" th:src="@{/client/js/chatClient.js}"></script> 
+</body>
+</html>

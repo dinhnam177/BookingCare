@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{client/masterLayout.html}">
+<head>
+<meta charset="ISO-8859-1">
+<title>Cập nhập thông tin</title>
+<link rel="stylesheet" th:href="@{/client/css/duoiSlider.css}">
+
+</head>
+<body>
+
+	<div class="content__search" layout:fragment="content">
+           <div class="content__search-heading">
+                <a href="./index.html" class="fas fa-arrow-left icons-back"></a>
+                <p>Bác Sĩ Bổi bật</p>
+            </div>
+             <div class="content__search-form">
+                <form action="" method="POST" class="form" id="formSignup">
+                    <div class="form-heading ">
+                        <h3 class="heading-login">Cập Nhật Thông Tin</h3>
+                    </div>
+                    <div class="spacer"></div>
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label for="fullname" class="form-label">Họ Và Tên </label>
+                            <input id="fullName" name="fullName" type="text" placeholder="VD: Nguyễn Văn A" class="form-control" 
+                            th:value="${userDto.name}">
+                            <span class="form-message"></span>
+                        </div>
+    
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email</label>
+                            <input id="email" name="email" type="text" placeholder="VD:NguyenVanA@gmail.com" 
+                            class="form-control" th:value="${userDto.email}">
+                            <span class="form-message"></span>
+                        </div>
+    
+                        <div class="form-group">
+                            <label for="phone" class="form-label">Phone Number</label>
+                            <input id="phone" name="phone" type="tel" placeholder="VD:0988888888" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                             class="form-control" th:value="${userDto.phone}">
+                            <span class="form-message"></span>
+                        </div>
+                        <input type="checkbox" class="checkkk"  id="checkPass" onchange="myFunction()"><span class="capnhat"> Cập Nhật Thông Tin</span>
+                        
+                        <button class="form-submit" id="btnUpdate">UpDate</button>
+                    </div>
+                </form>
+            </div> 
+   
+	</div>
+	<div class="space"></div>
+	 <script layout:fragment="js" th:src="@{/client/js/update.js}"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link href="/testVideo.css" rel="stylesheet" type="text/css">
+</head>
+<body onbeforeunload="disconnect();">
+<input type ='hidden' id="userid" th:value="${id}"/>
+<div id="selectedVideosContainer">
+  <p id="peerIdN"><p>
+  <input placeholder="Nhap peerr de call" id="peerDes"/>
+  <button id="call">Call</button>
+  <video id="remoteView"></video>
+  <video id="selfView"></video>
+  <div id="wrapper-caller" style="display: none">
+    <p id="title-caller"><p>
+    <button id="answer">Answer</button>
+    <button id="cancel">Cancel</button>
+  </div>
+  <button id="exit">Exit</button>>
+</div>
+<div id="remoteVideosContainer"></div>
+
+<!--<script src='/js/adapter-latest.js'></script>-->
+<script src='/testVideo.js'></script>
+
+</body>
+</html>

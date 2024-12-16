@@ -1,0 +1,24 @@
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "multi_match": {
+            "query": "__PARAM__",
+            "fields": [ "title", "content" , "name","code", "description", "location", "fullName", "location", "shortDescription"],
+            "fuzziness": "3"
+          }
+        }
+      ],
+      "must_not": [
+        {
+          "match" : {
+            "status": "0"
+          }
+        }
+      ]
+    }
+  },
+  "from": 0,
+  "size": 10
+}

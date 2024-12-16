@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/masterLayout.html}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Manager User</title>
+</head>
+<body>
+<section class="row" layout:fragment="content">
+    <div class="container-fluid">
+        <div class="card shadow mb-4">
+            <div class="card-header py-4 d-flex flex-row-reverse">
+                <form method="POST" action="" enctype="multipart/form-data"
+                      id="uploadMedical">
+
+                    <button style="width: 60px;" type="button"
+                            class="dt-button buttons-html5 btn btn-white btn-primary btn-bold"
+                            data-toggle="modal" data-target="#exampleModal"
+                            title='Xem chi tiết' id="btnInforMedia">
+							<span> <i class="bi bi-eye"></i>
+							</span>
+                    </button>
+                    <button type="button" style="width: 60px;" class="btn btn-primary"
+                            id="btnComplete" title='Hoàn thành lịch khám'>
+							<span> <i class="bi bi-check2-square"></i>
+							</span>
+                    </button>
+
+                    <button style="width: 60px;" type="button"
+                            class="dt-button buttons-html5 btn btn-white btn-primary btn-bold"
+                            data-toggle="modal" data-target="#updateTimeClose"
+                            title='Thay đổi thời gian kết thúc' id="btnUpdateTimeClose">
+							<span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar2-plus" viewBox="0 0 16 16">
+                                  <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H2z"/>
+                                  <path d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V4zM8 8a.5.5 0 0 1 .5.5V10H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V11H6a.5.5 0 0 1 0-1h1.5V8.5A.5.5 0 0 1 8 8z"/>
+                                </svg>
+							</span>
+                    </button>
+
+                    <button type="button" style="width: 60px;" class="btn btn-primary"
+                            data-toggle="modal" data-target="#dialogConfirmPayment"
+                            id="btnPayment" title='Thanh toán'>
+							<span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-credit-card-2-back" viewBox="0 0 16 16">
+                                  <path d="M11 5.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1z"/>
+                                  <path d="M2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2zm13 2v5H1V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1zm-1 9H2a1 1 0 0 1-1-1v-1h14v1a1 1 0 0 1-1 1z"/>
+                                </svg>
+							</span>
+                    </button>
+
+                    <button style="width: 60px;" id="btnDeleteMedical" type="button"
+                            class="dt-button buttons-html5 btn btn-white btn-primary btn-bold"
+                            data-target="#dialogConfirmCancel" data-toggle="modal"
+                            title='Huỷ lịch khám'>
+							<span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar2-x" viewBox="0 0 16 16">
+                                  <path d="M6.146 8.146a.5.5 0 0 1 .708 0L8 9.293l1.146-1.147a.5.5 0 1 1 .708.708L8.707 10l1.147 1.146a.5.5 0 0 1-.708.708L8 10.707l-1.146 1.147a.5.5 0 0 1-.708-.708L7.293 10 6.146 8.854a.5.5 0 0 1 0-.708z"/>
+                                  <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H2z"/>
+                                  <path d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V4z"/>
+                                </svg>
+							</span>
+                    </button>
+
+
+                    <!-- Modal -->
+
+                    <div class="modal fade" id="exampleModal" tabindex="-1"
+                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-xl" role="document">
+                            <div class="modal-content">
+
+                                <div class="modal-body">
+                                    <div class="row match-height">
+                                        <div class="col-12">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h4 class="card-title">Quản lý lịch khám</h4>
+                                                </div>
+                                                <div class="card-content">
+                                                    <div class="card-body">
+
+                                                        <div class="row">
+                                                            </br>
+                                                            <div class="col-md-6 col-12">
+                                                                <div class="form-group">
+                                                                    <label for="first-name-column">Tên bệnh
+                                                                        nhân: </label>
+
+                                                                    <label for="first-name-column" id="namePatient">Tên
+                                                                        bài viết</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6 col-12">
+                                                                <div class="form-group">
+                                                                    <label for="first-name-column">Số điện thoại bệnh
+                                                                        nhân: </label>
+
+                                                                    <label for="first-name-column"
+                                                                           id="phonePatient"> </label>
+                                                                </div>
+                                                            </div>
+                                                            <br></br>
+                                                            <div class="col-md-6 col-12">
+                                                                <div class="form-group">
+                                                                    <label for="first-name-column">Tên người đặt
+                                                                        lịch: </label>
+
+                                                                    <label for="first-name-column"
+                                                                           id="nameScheduler"></label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6 col-12">
+                                                                <div class="form-group">
+                                                                    <label for="first-name-column">Số điện thoại người
+                                                                        đặt lịch: </label>
+
+                                                                    <label for="first-name-column"
+                                                                           id="phoneScheduer"></label>
+                                                                </div>
+                                                            </div>
+                                                            <br></br>
+                                                            <div class="col-md-6 col-12">
+                                                                <div class="form-group">
+                                                                    <label for="first-name-column">Năm sinh: </label>
+
+                                                                    <label for="first-name-column"
+                                                                           id="yearOfBirth"></label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6 col-12">
+                                                                <div class="form-group">
+                                                                    <label for="first-name-column">Giới tính: </label>
+
+                                                                    <label for="first-name-column" id="sex"></label>
+                                                                </div>
+                                                            </div>
+                                                            <br></br>
+                                                            <div class="col-md-12 col-24">
+                                                                <div class="form-group">
+                                                                    <label for="first-name-column">Địa chỉ: </label>
+
+                                                                    <label for="first-name-column"
+                                                                           id="location"></label>
+                                                                </div>
+                                                            </div>
+                                                            <br></br>
+                                                            <div class="col-md-12 col-24">
+                                                                <div class="form-group">
+                                                                    <label for="first-name-column">Lý do khám: </label>
+
+                                                                    <label for="first-name-column" id="reason"></label>
+                                                                </div>
+                                                            </div>
+                                                            <br></br>
+
+                                                            <div class="col-md-3 col-4">
+                                                                <div class="form-group">
+                                                                    <label for="first-name-column">Bác sĩ khám: </label>
+
+                                                                    <label for="first-name-column"
+                                                                           id="doctorName"></label>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-3 col-4">
+                                                                <div class="form-group">
+                                                                    <label for="first-name-column">Ca khám: </label>
+
+                                                                    <label for="first-name-column"
+                                                                           id="wordTimeTime"></label>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-3 col-4">
+                                                                <div class="form-group">
+                                                                    <label for="first-name-column">Ngày khám: </label>
+
+                                                                    <label for="first-name-column" id="date"></label>
+                                                                </div>
+                                                            </div>
+                                                            <br></br>
+
+                                                            <div class="col-md-6 col-12">
+                                                                <div class="form-group">
+                                                                    <label for="first-name-column">Bệnh viện
+                                                                        khám: </label>
+
+                                                                    <label for="first-name-column"
+                                                                           id="hospitalName"></label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6 col-12">
+                                                                <div class="form-group">
+                                                                    <label for="first-name-column">Hình thức
+                                                                        khám: </label>
+
+                                                                    <label for="first-name-column" id="type"></label>
+                                                                </div>
+                                                            </div>
+                                                            <br></br>
+                                                            <div class="col-md-6 col-12">
+                                                                <div class="form-group">
+                                                                    <label for="first-name-column">Giá khám:
+                                                                    </label>
+
+                                                                    <label for="first-name-column" id="priceMedical"></label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6 col-12">
+                                                                <div class="form-group">
+                                                                    <label for="first-name-column">Trạng thái thanh toán:
+                                                                        </label>
+
+                                                                    <label for="first-name-column" id="statusPayment"></label>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Close
+                                    </button>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </form>
+            </div>
+
+            <div class="modal fade" id="updateTimeClose" tabindex="-1"
+                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl" role="document">
+                    <div class="modal-content">
+
+                        <div class="modal-body">
+                            <div class="row match-height">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4 class="card-title">Thay đổi thời gian kết thúc khám</h4>
+                                        </div>
+                                        <div class="card-content">
+                                            <div class="card-body">
+
+                                                <div class="row">
+                                                    </br>
+                                                    <div class="col-md-6 col-12">
+                                                        <div class="form-group">
+                                                            <label for="first-name-column">Tên bệnh nhân: </label>
+
+                                                            <label for="first-name-column" id="namePatientTime"></label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-12">
+                                                        <div class="form-group">
+                                                            <div class="form-group">
+                                                                <label for="first-name-column">Ca khám hiện
+                                                                    tại: </label>
+
+                                                                <label for="first-name-column"
+                                                                       id="wordTimeTimeOld"></label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <br></br>
+
+
+                                                    <div class="col-md-12 col-24">
+                                                        <div class="form-group">
+                                                            <label for="email-id-column">Chọn ca khám muốn kết
+                                                                thúc</label>
+                                                            <th:block th:each="itemlstWorkTime : ${lstWorkTime}">
+                                                                <div class="form-check form-check-inline">
+                                                                    <input class="form-check-input checkWorkTime"
+                                                                           type="radio" name="workTimeId"
+                                                                           id="inlineCheckbox1"
+                                                                           th:value="${itemlstWorkTime.id}"> <label
+                                                                        th:utext="${itemlstWorkTime.time}"
+                                                                        class="form-check-label "
+                                                                        for="inlineCheckbox1"></label>
+                                                                </div>
+                                                            </th:block>
+                                                        </div>
+                                                        <input type="hidden" id="idMedicalChange" value="">
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary"
+                                    data-dismiss="modal">Close
+                            </button>
+                            <button type="button" id="changeTime" class="btn btn-primary">Xác nhận</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped" id="dataTable" width="100%"
+                           cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th class="check-box min-width"
+                                style="padding-left: 12px; padding-top: 10px; width: 7%">
+                                <label class="d-flex justify-content-center">Chọn tất
+                                    cả</label>
+                                <div style="display: flex;">
+
+                                    <input class="d-flex justify-content-center" type="checkbox"
+                                           style="margin: auto;" name="selectBox" id="checkAll">
+                                </div>
+                            </th>
+                            <th><label class="d-flex justify-content-center">Tên
+                                bác sĩ khám</label></th>
+                            <th><label class="d-flex justify-content-center">Ca khám
+                            </label></th>
+                            <th><label class="d-flex justify-content-center">Tên bệnh nhân
+                            </label></th>
+                            <th><label class="d-flex justify-content-center">Ngày khám
+                            </label></th>
+                            <th><label class="d-flex justify-content-center">Hình thức khám
+                            </label></th>
+                            <th><label class="d-flex justify-content-center">Trạng thái thanh toán
+                            </label></th>
+                            </label></th>
+
+
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <th:block th:each="itemMedical : ${lstMedical}">
+                            <tr>
+                                <td class="d-flex justify-content-center get " style="padding: 45px 0 45px 0"><input
+                                        id="checkOne" name="checkOne" type="checkbox" th:value="${itemMedical.id}"
+                                ></td>
+                                <td style="text-align: center;" th:utext="${itemMedical.doctor.name}"
+                                    data-toggle="modal" data-target="#exampleModal"></td>
+                                <td style="text-align: center;" th:utext="${itemMedical.wordTimeTime}"></td>
+                                <td style="text-align: center;" th:utext="${itemMedical.namePatient}"></td>
+                                <td style="display: none; visibility: hidden; width: 0px !important; height: 0px !important;"
+                                        th:utext="${itemMedical.phonePatient}"></td>
+                                <td style="text-align: center;" th:utext="${itemMedical.date}"></td>
+                                <td style="display: none; visibility: hidden; width: 0px !important; height: 0px !important;"
+                                    th:utext="${itemMedical.phoneScheduer}"></td>
+                                <td style="display: none; visibility: hidden; width: 0px !important; height: 0px !important;"
+                                    th:utext="${itemMedical.nameScheduler}"></td>
+                                <td style="display: none; visibility: hidden; width: 0px !important; height: 0px !important;"
+                                    th:utext="${itemMedical.sex}"></td>
+                                <td style="display: none; visibility: hidden; width: 0px !important; height: 0px !important;"
+                                    th:utext="${itemMedical.location}"></td>
+                                <td style="display: none; visibility: hidden; width: 0px !important; height: 0px !important;"
+                                    th:utext="${itemMedical.reason}"></td>
+                                <td style="display: none; visibility: hidden; width: 0px !important; height: 0px !important;"
+                                    th:utext="${itemMedical.yearOfBirth}"></td>
+                                <td style="display: none; visibility: hidden; width: 0px !important; height: 0px !important;"
+                                    th:utext="${itemMedical.type}"></td>
+                                <td style="display: none; visibility: hidden; width: 0px !important; height: 0px !important;"
+                                    th:utext="${itemMedical.hospitalName}"></td>
+                                <th:block th:if="${itemMedical.type}=='on'">
+                                    <td style="text-align: center;">Tư vấn online</td>
+                                </th:block>
+                                <th:block th:unless="${itemMedical.type}=='on'">
+                                    <td style="text-align: center;">Khám tại cơ sở y tế</td>
+                                </th:block>
+                                <td style="display: none; visibility: hidden; width: 0px !important; height: 0px !important;">Chưa khám
+                                </td>
+                                <td style="text-align: center;"
+                                    th:utext="${itemMedical.statusPayment == 1 ? 'Đã thanh toán' : 'Chưa thanh toán'}"
+                                >
+                                </td>
+                                <td style="display: none; visibility: hidden; width: 0px !important; height: 0px !important;"
+                                    th:utext="${itemMedical.examinationPrice}"
+                                >
+                                </td>
+                            </tr>
+                        </th:block>
+                        </tbody>
+                    </table>
+                    <div class="container d-flex align-items-center justify-content-center">
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination" id="pagination"></ul>
+                        </nav>
+                    </div>
+                    <form action="" method="GET" id="formPagination">
+                        <input type="hidden" id="page" name="page"/>
+                        <input type="hidden" th:value="${currentPage}" id="currentPage"/>
+                        <input type="hidden" th:value="${totalPage}" id="totalPage"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal fade" id="ok" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Thông báo</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Thao tác thành công</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal fade" id="dialogConfirmPayment" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Thông báo</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Bạn chắc chắn muốn hoàn thành việc thanh toán chứ</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btnConfirmPayment" data-dismiss="modal">Xác nhận
+                    </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Huỷ</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal fade" id="dialogConfirmCancel" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Thông báo</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Bạn chắc chắn muốn huỷ ca khám chứ</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btnConfirmCancel" data-dismiss="modal">Xác nhận
+                    </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Huỷ</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+<script layout:fragment="js" th:src="@{/admin/assets/js/managerMedical.js}"></script>
+
+</body>
+
+</html>

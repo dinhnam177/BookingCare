@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{client/masterLayout.html}">
+<head>
+<meta charset="ISO-8859-1">
+<title>LiÃªn há»</title>
+<link rel="stylesheet" th:href="@{/client/css/duoiSlider.css}">
+</head>
+<body>
+
+	<div class="content__search" layout:fragment="content">
+           <div class="content__search-heading">
+                <a href="./index.html" class="fas fa-arrow-left icons-back"></a>
+                <p>Thông tin lịch Khám </p>
+            </div>
+           <!-- css để ở content nhé  -->
+
+           <div class="content__search-form-table">
+                <table border="1">
+                    <tr>
+                        <th>Tên bác sĩ</th>
+                        <th>Ca khám</th>
+                        <th>Tên bệnh nhân</th>
+                        <th>Số điện thoại</th>
+                        <th>Giới tính</th>
+                        <th>Địa chỉ</th>
+                        <th>Lý do</th>
+                        <th>Ngày khám</th>
+                        <th>Bệnh viện khám</th>
+                        <th>Hình thức khám</th>
+                    </tr>
+                <!--     <tr>hospitalName
+                        <td>02/02/2022</td>
+                        <td>Trần Văn Tiến</td>
+                        <td> Số 16, Trần Duy Hưng</td>
+                        <td>02/02/2022</td>
+                        <td>Trần Văn Tiến</td>
+                        <td> Số 16, Trần Duy Hưng</td>
+                    </tr> -->
+                    <th:block th:each="itemMedical : ${lstDto}">
+									<tr >
+										
+										<td style="text-align: center;"  th:utext="${itemMedical.doctor.name}" ></td>
+										<td style="text-align: center;" th:utext="${itemMedical.wordTimeTime}"></td>
+										<td style="text-align: center;"th:utext="${itemMedical.namePatient}"></td>
+										<td style="text-align: center;"th:utext="${itemMedical.phonePatient}"></td>
+										<td style="text-align: center;" th:utext="${itemMedical.sex}"></td>
+										<td style="text-align: center;" th:utext="${itemMedical.location}"></td>
+										<td style="text-align: center;" th:utext="${itemMedical.reason}"></td>
+										<td style="text-align: center;"th:utext="${itemMedical.date}"></td>
+										<td style="text-align: center;"th:utext="${itemMedical.hospitalName}"></td>
+										<th:block th:if="${itemMedical.type}=='on'">
+										<td style="text-align: center;">Tư vấn online</td>
+										</th:block>
+										<th:block th:unless="${itemMedical.type}=='on'">
+										<td style="text-align: center;">Khám tại cơ sở y tế</td>
+										</th:block>
+									<!-- 	<td style="text-align: center;">Chưa khám </td>  hospitalName -->
+									</tr>
+								</th:block>
+                    
+                </table>
+        </div>
+	</div>
+	<div class="space"></div>
+
+
+</body>
+</html>

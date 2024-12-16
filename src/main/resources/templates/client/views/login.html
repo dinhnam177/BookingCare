@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{client/masterLayout.html}">
+<head>
+<meta charset="ISO-8859-1">
+<title>Đăng nhập</title>
+<link rel="stylesheet" th:href="@{/client/css/duoiSlider.css}">
+</head>
+<body>
+
+	<div class="content__search-form" layout:fragment="content">
+           <form th:action="@{\login}" method="POST" class="form" id="form-1">
+                <div class="form-heading ">
+                    <h3 class="heading-login">Đăng Nhập</h3>
+                </div>
+                <div class="form-body">
+                    <div class="form-group">
+                        <label for="username" class="form-label">Username</label>
+                        <input id="username" name="username" type="text" class="form-control">
+                        <span class="form-message"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" class="form-label">Password</label>
+                        <input id="password" name="password" type="password" class="form-control">
+                        <span class="form-message"></span>
+                    </div>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                    <button class="form-submit">Đăng nhập</button>
+                </div>
+            </form>
+   
+	</div>
+	<div class="space"></div>
+
+
+</body>
+</html>

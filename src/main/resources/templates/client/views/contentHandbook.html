@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{client/masterLayout.html}">
+<head>
+<meta charset="ISO-8859-1">
+<title>Cẩm nang</title>
+<link rel="stylesheet" th:href="@{/client/css/duoiSlider.css}">
+<link rel="stylesheet" th:href="@{/client/css/comment.css}">
+</head>
+<body>
+
+	<div class="content__search" layout:fragment="content">
+         <div class="content__search-heading">
+                <a href="/home" class="fas fa-arrow-left icons-back"></a>
+                <p>Cẩm Nang</p>
+            </div>
+            <div class="grid wide">
+                <h1 class="camnang-heading" th:utext="${dto.title}">
+                   
+                </h1>
+                <ul class="author">
+                    <li class="author-item">
+                        Sản Phẩm của: <a href="/home">BooingCare</a>
+                     </li>
+                    <li class="author-item" th:attr="data-createdByUserId=${dto.createdById}" id="createdByUserId" >
+                        Nhóm Tác Giả: <p th:utext="${dto.createdByName}"></p>
+                    </li>
+                    <li class="author-item">
+                        Người Kiểm duyệt: <p  th:utext="${dto.createdByName}"></p>
+                    </li>
+                    <li class="author-item" th:utext="
+                    @{Xuất bản: {createdDate}, Cập nhật lần cuối: {createdDated}(createdDate=${dto.createdDate}, createdDated=${dto.createdDate})}">
+                      
+                    </li>
+                </ul>
+
+               <div class="des" th:utext="${dto.content}"></div>
+               
+            </div>
+<div class="space"></div>
+<th:block th:if="${lstComment}">
+	<div class="container mt-12">
+    <div class="row d-flex justify-content-center ">
+        <div class="col-md-12">
+        	<th:block th:if="${#session?.getAttribute('userDetails')}">
+             <form id="messageForm" name="messageForm">
+            <div class="card p-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="user d-flex flex-row align-items-center"> <img src="https://res.cloudinary.com/dtvkhopoe/image/upload/v1645000335/benh_nhan_ti17om.jpg" width="30" class="user-img rounded-circle mr-2">
+                     <span><small class="font-weight-bold text-primary" th:utext="${#session?.getAttribute('userDetails').fullName}"></small> 
+                    <input type= "text" class="font-weight-bold" id="comment" th:attr="data-idUser=${#session?.getAttribute('userDetails').id},data-idHandbook=${dto.id}"   />
+                    </span> </div> 
+                </div>
+            </div>
+            </form>
+            </th:block>
+            <div id="showComment">
+            <th:block th:each="itemComment : ${lstComment}">
+            <!--Start trường hợp đã đăng nhập  -->
+            <th:block th:if="${#session?.getAttribute('userDetails')}">
+            
+            <!--Start co la tac gia   -->
+            <th:block th:if="${#session?.getAttribute('userDetails').id}==${dto.createdById}">
+            <div class="card p-3 mt-2" th:id="${itemComment.id}">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="user d-flex flex-row align-items-center"> <img src="https://res.cloudinary.com/dtvkhopoe/image/upload/v1645000335/benh_nhan_ti17om.jpg" width="30" class="user-img rounded-circle mr-2">
+                     <span><small class="font-weight-bold text-primary" th:utext="${itemComment.userName}">
+                    </small> <small class="font-weight-bold" th:utext="${itemComment.content}"></small></span> </div> <small>3 days ago</small>
+                </div>
+                <div class="action d-flex justify-content-between mt-2 align-items-center">
+                    <div class="reply px-4"> <small id="removeComment" th:attr="data-idComment=${itemComment.id}" th:onclick="|xoaComment('${itemComment.id}')|">Xoá</small> 
+                    <div class="icons align-items-center"> <i class="fa fa-check-circle-o check-icon text-primary"></i> </div>
+                </div>
+            </div>
+            </div>
+            </th:block>
+            <!--ENd có là tác giả   -->
+            
+            <!-- Start Nếu không là tác giả kiểm tra tiếp  -->
+            <th:block th:unless="${#session?.getAttribute('userDetails').id}==${dto.createdById}">
+            <!--Start kiểm tra có là tác giả của comment  -->
+             <th:block th:if="${#session?.getAttribute('userDetails').id}==${itemComment.idUser}">
+            <div class="card p-3 mt-2" th:id="${itemComment.id}">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="user d-flex flex-row align-items-center"> <img src="https://res.cloudinary.com/dtvkhopoe/image/upload/v1645000335/benh_nhan_ti17om.jpg" width="30" class="user-img rounded-circle mr-2"> 
+                    <span><small class="font-weight-bold text-primary" th:utext="${itemComment.userName}">
+                    </small> <small class="font-weight-bold" th:utext="${itemComment.content}"></small></span> </div> <small>3 days ago</small>
+                </div>
+                <div class="action d-flex justify-content-between mt-2 align-items-center">
+                    <div class="reply px-4"> <small id="removeComment" th:attr="data-idComment=${itemComment.id}" th:onclick="|xoaComment('${itemComment.id}')|">Xoá</small> 
+                    <div class="icons align-items-center"> <i class="fa fa-check-circle-o check-icon text-primary"></i> </div>
+                </div>
+            </div>
+            </div>
+            </th:block>
+            <!--End kiểm tra có là tác giả của comment   -->
+            
+              <!--Start không tác giả của comment   -->
+            <th:block th:unless="${#session?.getAttribute('userDetails').id}==${itemComment.idUser}">
+            <div class="card p-3 mt-2" th:id="${itemComment.id}">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="user d-flex flex-row align-items-center"> <img src="https://res.cloudinary.com/dtvkhopoe/image/upload/v1645000335/benh_nhan_ti17om.jpg" width="30" class="user-img rounded-circle mr-2"> 
+                    <span><small class="font-weight-bold text-primary" th:utext="${itemComment.userName}">
+                    </small> <small class="font-weight-bold"  th:utext="${itemComment.content}"></small></span> </div> <small>3 days ago</small>
+                </div>
+                <div class="action d-flex justify-content-between mt-2 align-items-center">
+                    <div class="reply px-4"> 
+                    <div class="icons align-items-center"> <i class="fa fa-check-circle-o check-icon text-primary"></i> </div>
+                </div>
+            </div>
+            </div>
+            </th:block>
+            <!--End không là tác giả của cmt  -->
+            
+            
+            </th:block>
+            <!--End Nếu không là tác giả kiểm tra tiếp  -->
+            
+            </th:block>
+            <!--End trường hợp đã đăng nhập  -->
+            
+            <!--Start trường hợp chưa đăng nhập  -->
+             <th:block th:unless="${#session?.getAttribute('userDetails')}">
+             <div class="card p-3 mt-2" id="${itemComment.id}">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="user d-flex flex-row align-items-center"> <img src="https://i.imgur.com/C4egmYM.jpg" width="30" class="user-img rounded-circle mr-2"> <span><small class="font-weight-bold text-primary" th:utext="${itemComment.userName}">
+                   </small> <small class="font-weight-bold"  th:utext="${itemComment.content}"></small></span> </div> <small></small>
+                </div>
+                <div class="action d-flex justify-content-between mt-2 align-items-center">
+                    <div class="reply px-4"> 
+                    <div class="icons align-items-center"> <i class="fa fa-check-circle-o check-icon text-primary"></i> </div>
+                </div>
+            </div>
+            </div>
+            <!--End trường hợp chưa đăng nhập  -->
+            </th:block>
+            
+       <!--      <div class="card p-3 mt-2">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="user d-flex flex-row align-items-center"> <img src="https://i.imgur.com/0LKZQYM.jpg" width="30" class="user-img rounded-circle mr-2"> <span><small class="font-weight-bold text-primary">rashida_jones</small> <small class="font-weight-bold">Really cool Which filter are you using? </small></span> </div> <small>3 days ago</small>
+                </div>
+                <div class="action d-flex justify-content-between mt-2 align-items-center">
+                    <div class="reply px-4"> <small>Remove</small> <span class="dots"></span> <small>Reply</small> <span class="dots"></span> <small>Translate</small> </div>
+                    <div class="icons align-items-center"> <i class="fa fa-user-plus text-muted"></i> <i class="fa fa-star-o text-muted"></i> <i class="fa fa-check-circle-o check-icon text-primary"></i> </div>
+                </div>
+            </div> -->
+           <!--  <div class="card p-3 mt-2">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="user d-flex flex-row align-items-center"> <img src="https://i.imgur.com/ZSkeqnd.jpg" width="30" class="user-img rounded-circle mr-2"> <span><small class="font-weight-bold text-primary">simona_rnasi</small> <small class="font-weight-bold text-primary">@macky_lones</small> <small class="font-weight-bold text-primary">@rashida_jones</small> <small class="font-weight-bold">Thanks </small></span> </div> <small>3 days ago</small>
+                </div>
+                <div class="action d-flex justify-content-between mt-2 align-items-center">
+                    <div class="reply px-4"> <small>Remove</small> <span class="dots"></span> <small>Reply</small> <span class="dots"></span> <small>Translate</small> </div>
+                    <div class="icons align-items-center"> <i class="fa fa-check-circle-o check-icon text-primary"></i> </div>
+                </div>
+            </div> -->
+            </div>
+        </div>
+    </div>
+</div>
+</th:block>
+          
+   
+	</div>
+	<div class="space"></div>
+ <script layout:fragment="js" th:src="@{/client/js/comment.js}"></script>
+
+</body>
+</html>

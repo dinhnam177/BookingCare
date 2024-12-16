@@ -1,0 +1,122 @@
+.header_nav {
+    display: flex;
+    justify-content: space-between;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    /* padding: 1.5rem 9%; */
+    height: 73px;
+    z-index: 4;
+}
+.header_nav-logo img{
+  line-height: 40px;
+  display: flex;
+  align-items: center;
+    color: #000;
+}
+.header_nav-logo {
+    font-size: 2.5rem;
+    line-height: 73px;
+    display: flex;
+}
+
+.header_nav-logo-link {
+    color: var(--white-color);
+}
+
+.header_nav-logo-link span {
+    color: var(--primary-color);
+}
+
+.header_nav-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header_nav-item {
+    color: var(--black-color);
+    margin-right: 20px;
+}
+
+.header_nav-item a {
+    color: var(--black--color);
+    font-size: 1.5rem;
+}
+
+.header_nav-item span {
+    display: block;
+    color: var(--text-color);
+    font-size: 1.3rem;
+    font-weight: 300;
+}
+
+.header_nav-icon {
+    line-height: 73px;
+    font-size: 2.5rem;
+    color: var(--black-color);
+    cursor: pointer;
+}
+
+.header_nav-icon:hover {
+    color: red;
+}
+
+.header_nav_login{
+    line-height: 73px;
+    font-size: 15px;
+}
+.login-list{
+    display: flex;
+    list-style: none;
+    cursor: pointer;
+}
+.login-item{
+    color: var(--black--color);
+    margin-right: 10px;
+    
+}
+.header_nav_login{
+    position: relative;
+}
+
+.update__Thongtin{
+    position: absolute;
+    background-color: #CCCCCC;
+    border-radius: 5px;
+    display: none;
+    width: 180px;
+}
+.list__thongtin{
+    list-style: none;
+}
+.thongtin__item{
+    margin: 1rem;
+    text-align: left;
+
+}
+.thongtin__item a{
+    color: #242424;
+}
+.logo{
+    display: flex;
+}
+/* .login-item::after{
+    content: "";
+    display: block;
+    position: absolute;
+    height: 30px;
+    border-left: 1px solid #46312f;
+    top: 50%;   
+    right: 3px;
+    transform: translateY(-50%);
+
+} */

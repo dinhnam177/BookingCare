@@ -1,0 +1,21 @@
+#form-label {
+    font-weight: 900;
+}
+#input-field {
+    width: 100%;
+    max-width: 400px;
+    height: 25px;
+    margin-bottom: 25px;
+}
+#form-btn {
+    background: #000;
+    color: #fff;
+    display: inline-block;
+    width: 80px;
+    height: 25px;
+    padding: 7px 10px 7px 10px;
+    border-radius: 5px 5px 5px 5px;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+}

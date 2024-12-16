@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/masterLayout.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Manager Chat</title>
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"
+            rel="stylesheet">
+    <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
+    <link rel="stylesheet"
+          th:href="@{/client/font/fontawesome-free-5.15.3-web/fontawesome-free-5.15.3-web/css/all.min.css}">
+    <link rel="stylesheet" th:href="@{/admin/assets/css/managerChat.css}">
+
+</head>
+<body>
+<section class="row" layout:fragment="content">
+    <link
+            href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+            rel="stylesheet"/>
+
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-lg-12">
+                <div class="card chat-app">
+                    <div id="plist" class="people-list">
+                        <div class="input-group">
+                            <p class="form-control">Danh sách tin nhắn</p>
+<!--                            <div class="input-group-prepend">-->
+<!--                                <span class="input-group-text"><i class="fa fa-search"></i></span>-->
+<!--                            </div>-->
+<!--                            <p class="form-control">Danh sách tin nhắn</p>-->
+<!--                            <input type="text" class="form-control" placeholder="Search...">-->
+                        </div>
+                        <ul class="list-unstyled chat-list mt-2 mb-0" id="showLstUser">
+
+                            <th:block th:each="item : ${lstInteractive}">
+                                <li class="clearfix searchMesssage"><img
+                                        th:src="${item.img}"
+                                        alt="avatar"/>
+                                    <div class="about">
+                                        <div class="name" th:utext="${item.fullName}"></div>
+                                        <div class="status" th:utext="${item.lastMessage}">
+                                            <i class="fa fa-circle offline"></i>
+                                        </div>
+                                    </div>
+                                    <input th:value="${item.userId}" class="idUser" type="hidden"></input>
+                                </li>
+                            </th:block>
+
+                        </ul>
+                    </div>
+                    <div class="chat">
+                        <div class="chat-header clearfix">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <a href="javascript:void(0);" data-toggle="modal"
+                                       data-target="#view_info"> <img
+                                            th:src="@{/client/img/avatarDefault.jpeg}" id="avatar"
+                                            alt="avatar">
+                                    </a>
+                                    <div class="chat-about">
+                                        <h6 class="m-b-0" id="userName">...</h6>
+                                        <small></small>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 wrapper-btn-call">
+                                    <button id="btnCallServer" class="btn-call"><i class='fas fa-video' style='color:#3993f3'></i></button>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="chat-history" style=" max-height:500px;overflow-y: scroll; min-height:500px">
+                            <ul id="elementChat" class="m-b-0">
+                                <!-- <li class="clearfix" id="showMessage">
+                                    <div class="message-data text-right">
+                                        <span class="message-data-time">10:10 AM, Today</span> <img
+                                            src="https://bootdey.com/img/Content/avatar/avatar7.png"
+                                            alt="avatar">
+                                    </div>
+                                    <div class="message other-message float-right" >Hi Aiden,
+                                        how are you? How is the project coming along?</div>
+                                </li>
+                                <li class="clearfix" id="showMessage">
+                                    <div class="message-data">
+                                        <span class="message-data-time">10:12 AM, Today</span>
+                                    </div>
+                                    <div class="message my-message">Are we meeting today?</div>
+                                </li>
+                                <li class="clearfix" id="showMessage">
+                                    <div class="message-data">
+                                        <span class="message-data-time">10:15 AM, Today</span>
+                                    </div>
+                                    <div class="message my-message">Project has been already
+                                        finished and I have results to show you.</div>
+                                </li> -->
+                            </ul>
+                        </div>
+                        <div class="chat-message clearfix">
+                            <form id="messageFormServer" name="messageFormServer">
+                                <div class="input-group mb-0">
+                                    <div class="input-group-prepend">
+                                        <button class="input-group-text" type="submit">
+                                            <i class="fa fa-send"></i>
+                                        </button>
+                                    </div>
+                                    <input type="text" class="form-control"
+                                           placeholder="Enter text here..." id="messageInputServer">
+                                </div>
+                            </form>
+
+                            <div class="modal-overlay">
+                                <div class="closes">
+                                    <i class="fa fa-close modal-close" style="font-size:36px"></i>
+                                </div>
+                                <div class="modal-container">
+                                    <video class="video-chat" id="remoteStreamServer" loop
+                                           autoplay></video>
+                                    <video class="video-minh" id="localStreamServer" loop
+                                           autoplay></video>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="modal-wrapper">
+        <div class='modal-notification' id='modal-notification'>
+            <p class='modal-notification-title'>Nguy?n Xuân B?o ?ang g?i cho b?n'</p>
+            <p class='modal-notification-desc'>'Cu?c g?i s? b?t ??u ngay khi b?n ch?p nh?n'</p>
+            <div class='modal-notification-icon'>
+                <div class='wrapper-icon-cancel' id='btnCancel'>
+                    <i class="fa-solid fa-xmark"></i>
+                </div>
+                <div class='wrapper-icon-accept' id='btnAccept'>
+                    <i class="fa-solid fa-video"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class ='modal-video' id='modal-video'>
+            <video class ='modal-remote-video' autoPlay={true} id="remote" ></video>
+            <div class ='wrapper-self-video'>
+                <video class ='modal-self-video' autoPlay={true} id="self" ></video>
+            </div>
+            <div class ='modal-action'>
+                <i class="fas fa-phone-slash fa-rotate-90 modal-action-icon disable" onclick="eventCallOff()"></i>
+                <i class="fas fa-microphone modal-action-icon" onclick="changeStatusMic()" id="mic-on"></i>
+                <i class="fas fa-microphone-slash modal-action-icon disable" onclick="changeStatusMic()" id = 'mic-off'></i>
+                <i class="fas fa-video modal-close modal-action-icon" onclick="changStatusCam()" id="video-on" ></i>
+                <i class="fas fa-video-slash modal-action-icon disable" onclick="changStatusCam()" id="video-off" ></i>
+                <i class="fas fa-tv modal-action-icon " onclick="shareScreen()" id="share-screen"></i>
+                <i class="fas fa-tv modal-action-icon disable" onclick="shareScreen()" id="share-screen-off"></i>
+            </div>
+        </div>
+    </div>
+</section>
+<script layout:fragment="js" th:src="@{/admin/assets/js/managerChat.js}"></script>
+
+
+</body>
+</html>

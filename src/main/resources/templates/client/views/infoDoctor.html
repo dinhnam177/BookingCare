@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{client/masterLayout.html}">
+<head>
+<meta charset="ISO-8859-1">
+<title>Bác sĩ</title>
+<link rel="stylesheet" th:href="@{/client/css/duoiSlider.css}">
+</head>
+<body>
+
+	<div class="content__search" layout:fragment="content">
+           <div class="content__search-heading">
+                <a href="/home" class="fas fa-arrow-left icons-back"></a>
+                <p>Back</p>
+            </div>
+            <div class="doctor">
+                <img th:src="${user.img}" alt="" class="dotor-img"  > 
+                <div class="dotor-info">
+                    <h1 class="dotor-heading" th:utext="'Bác sĩ: ' + ${user.name}"> </h1>
+                    <ul class="dotor-list">
+                     <!-- <div class="des" th:utext="${user.description}"></div> -->
+                        <li class="dotor-item" th:utext="${user.shortDescription}"> </li>
+                    <!--     <li class="dotor-item">Nguyên Phó trưởng khoa Lâm sàng 1, Bệnh viện Da Liễu TPHCM</li>
+                        <li class="dotor-item">Bác sĩ nhận khám mọi độ tuổi</li> -->
+                    </ul>
+               <!--      <button class="btn-doctor fas fa-check">  Thích</button>
+                    <button class="btn-doctor fas fa-share">Chia Sẻ</button> -->
+                </div>
+             </div>
+            <div class="item-infor-dotor">
+                    <div class="grid wide">
+                        <div class="row">
+                            <div class="col l-6">
+                                <div class="cot-2">
+                                    <input type="date" id="date" name="trip-start" class="inputDate" onchange="myFunction(this)"
+										value=""  th:attr="min=${minDate}" max="" th:data-idDoctor="${user.id}">
+                                    <p > <i class="fas  icon-kham fa-hospital-alt"></i>Lịch Khám</p>
+                                    <div class="time">
+                                       <th:block th:each="itemWk : ${user.lstWorkTime}"> 
+										
+											<a class="time-link" th:href="@{/book/{idDoctor}/{idWorktime}(idDoctor=${user.id},idWorktime=${itemWk.id})}" onclick="redirect()" th:utext="${itemWk.time}"></a>
+										</th:block>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                            <div class="col l-6">
+                                <div class="cot-1">
+                                    <div class="dia-chi">
+                                        <h3>Bệnh viện khám </h3>
+                                        <p th:utext="${user.hospitalName}"></p>
+                                        <div class="price" th:utext="${user.hospitalLocation}"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <hr>
+            <div class="des" th:utext="${user.description}"></div>
+
+          
+   
+	</div>
+	<div class="space"></div>
+
+ <script layout:fragment="js" th:src="@{/client/js/doctorOfSpecialized.js}"></script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{client/masterLayout.html}">
+<head>
+<meta charset="ISO-8859-1">
+<title>Cẩm nang</title>
+<link rel="stylesheet" th:href="@{/client/css/duoiSlider.css}">
+</head>
+<body>
+
+ <div class="content__search" layout:fragment="content">
+            <div class="content__search-heading">
+                <a href="/home" class="fas fa-arrow-left icons-back"></a>
+                <p>Cẩm nang</p>
+            </div>
+            <div class="timkiem__Camnang">
+                <div class="timkiem__input">
+                    <h3 class="headerr">Thông tin Tìm Kiếm </h3>
+		<!-- 			<form action="/searchHandbook" method= "POST"> -->
+					 <form action="" method="GET" id="formPagination">
+                    <div class="input-left">
+                        <div class="form-control-input">
+                            <label for="">Tên Bài Viết </label>
+                            <input type="text" placeholder="searchh here" name="title" id="title" th:value="${formSearch.title}">
+                        </div>
+                        <div class="form-control-input">
+                            <label for="">Chuyên Khoa </label>
+                            <select id="chuyenkhao-select"  name="specializedId">
+                             <option value="">Chọn chuyên khoa</option>
+                           <th:block th:each="itemChuyenKhoa : ${lstChuyenKhoa}">
+                           
+                           <th:block th:if="${itemChuyenKhoa.id} ==${formSearch.specializedId}">
+                                <option  selected th:value="${itemChuyenKhoa.id}" th:text="${itemChuyenKhoa.name}" ></option>
+                                </th:block>
+                                
+                          <th:block th:unless="${itemChuyenKhoa.id} == ${formSearch.specializedId}">
+                                <option   th:value="${itemChuyenKhoa.id}" th:text="${itemChuyenKhoa.name}" ></option>
+                                </th:block> 
+                                
+                                 </th:block>
+                              </select>
+                              
+                        </div>
+                        <div class="btn-camnang">
+                            <button class="camnang-btn">Search</button>
+                        </div>
+                    </div>
+              
+                   
+					<input type="hidden" id = "page" name="page" />
+					<input type="hidden" th:value="${curentPage}" id ="curentPage" />
+					</form>
+
+                    </div>
+            </div>
+            
+            <ul class="list__specialist">
+            	<th:block th:each="item : ${lstDto}">
+                <li class="list__specialist-item">
+                    <a th:href="@{/cam-nang/{id}(id=${item.id})}"  class="list__specialist-link">
+                        <img src="https://res.cloudinary.com/dtvkhopoe/image/upload/v1643638341/h1_whvkbh.jpg" alt="">
+                        <h3 th:utext="${item.title}"></h3>
+                    </a>
+                </li>
+                </th:block>
+                
+            </ul>
+            <div class="container">
+						<nav aria-label="Page navigation">
+							<ul class="pagination" id="pagination"></ul>
+						</nav>
+					</div>
+					
+        </div>
+         <script layout:fragment="js" th:src="@{/client/js/handbook.js}"></script>
+        
+</body>
+</html>

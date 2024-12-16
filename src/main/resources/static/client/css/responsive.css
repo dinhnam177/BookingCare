@@ -1,0 +1,91 @@
+/* mobile va tablet */
+@media (max-width:1023px){
+    .hide-on-tablet-mobile{
+        display: none;
+    }
+    .slider_list-link{
+        margin-top: 40px;
+    }
+    .content__handbook-item{
+        display: flex;
+        flex-direction: column;
+    }
+    .content__handbook-text{
+        margin-top: 30px;
+    }
+    .content__bookingcare-img{
+        display: none;
+    }
+}
+
+/* tablet */
+@media (min-width: 740px) and (max-width: 1023px){
+    .header_nav_login{
+        line-height: 73px;
+        font-size: 15px;
+    }
+    .header{
+        height: 60px;
+    }
+    .header_nav-logo{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .header{
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }
+    
+    .content__handbook-text{
+        margin-top: 16px;
+    }
+    .slider_content-heading{
+        font-size: 5rem;
+    }
+    .slider-content p{
+        font-size: 2.5rem;
+    }
+    .content__bookingcare-body{
+        justify-content: center;
+        align-items: center;
+    }
+    
+  
+}
+/* mobile */
+@media (max-width: 739px){
+    .hide-on-mobile{
+        display: none;
+    }
+    html{
+        font-size: 30%;
+    }
+    .slider_content-heading{
+        font-size: 2rem;
+        margin-bottom: 0px;
+    }
+    .slider-content p{
+        font-size: 2rem;
+    }
+    .slider-content p{
+        width: 300px;
+        margin: 10px;
+    }
+    .heading{
+        font-size: 2rem !important;
+    }
+    .content__heading{
+        padding: 0 1.6rem;
+    }
+    .footer1{
+        text-align: center;
+    }
+    .footer__bottom{
+        font-size: 1rem;
+        margin: 1.6rem;
+        line-height: 1.8rem;
+    }
+   
+}

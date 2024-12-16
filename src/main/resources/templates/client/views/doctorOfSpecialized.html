@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{client/masterLayout.html}">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet" th:href="@{/client/css/duoiSlider.css}">
+</head>
+<body>
+
+	<div class="content__search" layout:fragment="content">
+		<div class="content__search">
+			<div class="content__search-heading">
+				<a href="/home" class="fas fa-arrow-left icons-back"></a>
+				<p>Back</p>
+			</div>
+
+			<div class="xet-covid">
+				<h1>Danh sách bác sĩ</h1>
+				
+			</div>
+			<th:block th:each="item : ${lstDto}">
+				<div class="item-infor">
+					<div class="grid wide">
+						<div class="row">
+							<div class="col l-6">
+								<div class="cot-1">
+									<img class="cot-1-img"
+										th:src="${item.img}"
+										alt="">
+									<div>
+										<h2 th:utext="${item.name}"></h2>
+										<span  th:utext="${item.shortDescription}"></span>
+									</div>
+								</div>
+							</div>
+							<div class="col l-6">
+								<div class="cot-2">
+									<input type="date" id="date" name="trip-start" class="inputDate" onchange="myFunction(this)"
+										 th:data-idDoctor="${item.id}">
+									
+									<p>
+										<i class="fas  icon-kham fa-hospital-alt"></i>Lịch Khám
+									</p>
+									<div class="time">
+										<th:block th:each="itemWk : ${item.lstWorkTime}"> 
+										
+											<a class="time-link" th:href="@{/book/{idDoctor}/{idWorktime}(idDoctor=${item.id},idWorktime=${itemWk.id})}" onclick="redirect()" th:utext="${itemWk.time}"></a>
+										</th:block>
+
+
+									</div>
+									<div class="info" >
+										<p>Bệnh viện: </p>
+										<p th:utext="${item.hospitalName}"></p>
+										<div class="price">
+											<p th:utext="'Địa chỉ: '+${item.hospitalLocation}"></p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</th:block>
+			<br></br>
+			
+
+			
+
+		</div>
+	</div>
+	<div class="space"></div>
+	 <script layout:fragment="js" th:src="@{/client/js/doctorOfSpecialized.js}"></script>
+
+</body>
+</html>

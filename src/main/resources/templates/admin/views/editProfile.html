@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{admin/masterLayout.html}">
+
+<head>
+<meta charset="UTF-8">
+<title>Manager User</title>
+<link rel="stylesheet" th:href="@{/admin/assets/css/editProfile.css}">
+</head>
+<body>
+	<section class="row" layout:fragment="content">
+		<div class="container rounded bg-white mt-5 mb-5">
+		<form method="POST" action="" enctype="multipart/form-data"
+						id="updateProfile">
+			<div class="row">
+				<div class="col-md-3 border-right">
+					<div
+						class="d-flex flex-column align-items-center text-center p-5 py-5">
+						<img class="rounded-circle avatar" width="150px"
+							th:src="${userDto.img}"><span
+							class="font-weight-bold">Amelly</span><span class="text-black-50">amelly12@bbb.com</span><span>
+						</span>
+						<label for="last-name-column">Ảnh đại diện</label> <input
+										type="file" id="img" class="form-control"
+										placeholder="Last Name" name="img">
+										<input type="hidden" th:value="${userDto.id}" id="id" name="id">
+					</div>
+				</div>
+				<div class="col-md-8 border-right">
+				
+					<div class="p-3 py-5">
+						<div
+							class="d-flex justify-content-between align-items-center mb-3">
+							<h4 class="text-right" th:utext="${userDto.name}"></h4>
+						</div>
+						<div class="row">
+							<div class="col-md-12 col-12">
+								<div class="form-group">
+									<label for="first-name-column">Họ và tên</label> <input
+										type="text" class="form-control" placeholder="First Name" th:value="${userDto.name}"
+										name="fullname" id="fullname">
+								</div>
+							</div>
+					
+							<div class="col-md-6 col-12">
+								<div class="form-group">
+									<label for="city-column">Tài khoản</label>
+									</br>
+								
+									<p th:utext="${userDto.username}"></p>
+									
+								</div>
+							</div>
+						
+						
+							<div class="col-md-6 col-12">
+								<div class="form-group">
+									<label for="country-floating">Số điện thoại</label> <input
+										type="text" id="phoneNumber" class="form-control"
+										name="phoneNumber" placeholder="Số điện thoại" th:value="${userDto.phone}">
+								</div>
+							</div>
+						<!-- 	<div class="col-md-6 col-12">
+								<div class="form-group">
+									<label for="email-id-column">Xác thực mật khẩu</label> <input
+										type="password" id="confirmPassword" class="form-control"
+										name="confirmPassword" placeholder="Xác thực mật khẩu">
+								</div>
+							</div> -->
+
+							<div class="col-md-12 col-12">
+								<div class="form-group">
+									<label for="email-id-column">Địa chỉ</label> <input
+										type="text" id="location" class="form-control"
+										name="location" placeholder="Địa chỉ" th:value="${userDto.location}">
+								</div>
+							</div>
+							<div class="col-md-6 col-12">
+								<div class="form-group">
+									<label for="company-column">Giới tính</label> <select
+										name="sex" class="form-control" id="sex">
+										<th:block th:if="${userDto.sex}=='Nam'">
+										<option value="Nam" selected>Nam</option>
+										<option value="Nữ">Nữ</option>
+										</th:block>
+										<th:block th:unless="${userDto.sex}=='Nam'">
+										<option value="Nữ" selected>Nữ</option>
+										<option value="Nam">Nam</option>
+										</th:block>
+									</select>
+								</div>
+							</div>
+							<div class="col-md-6 col-12">
+								<div class="form-group">
+									<label for="email-id-column">Ngày sinh</label> <input
+										type="date" id="yearOfBirth" class="form-control"
+										name="yearOfBirth" placeholder="Ngày sinh" th:value="${userDto.yearOfBirth}">
+								</div>
+							</div>
+
+							
+							<div class="col-md-12 col-12">
+								<div class="form-group">
+									<label for="email-id-column">Email</label> <input type="email"
+										id="email" class="form-control" name="email"
+										placeholder="Email" th:value="${userDto.email}">
+								</div>
+							</div>
+<!--  -->
+				<th:block th:if="${#session.getAttribute('userDetails').roles.contains('ROLE_DOCTOR')}">
+					<div class="col-md-6 col-12">
+						<div class="form-group">
+							<label for="company-column">Chọn chuyên khoa</label> <select
+								name="specializedId" class="form-control" id="specializedId">
+
+							<th:block th:each="itemSpecialized : ${lstSpecialized}">
+								<option th:value="${itemSpecialized.id}"
+										th:utext="${itemSpecialized.name}"></option>
+							</th:block>
+
+						</select>
+						</div>
+					</div>
+
+					<div class="col-md-6 col-14">
+						<div class="form-group">
+							<label for="company-column">Bệnh viện</label> <select
+								name="hospitalId" class="form-control" id="hospitalId">
+							<option selected value="" >Chọn Bệnh viện</option>
+							<th:block th:each="itemHospital : ${lstHospital}">
+								<th:block th:if="${userDto.hospitalId}==${itemHospital.id}">
+									<option th:value="${itemHospital.id}"
+											th:utext="${itemHospital.name}" selected></option>
+								</th:block>
+								<th:block th:unless="${userDto.hospitalId}==${itemHospital.id}">
+									<option th:value="${itemHospital.id}"
+											th:utext="${itemHospital.name}"></option>
+								</th:block>
+
+							</th:block>
+
+						</select>
+						</div>
+					</div>
+							<div class="col-md-12 col-24">
+								<div class="form-group">
+									<label for="email-id-column">Chọn ca khám </label>
+									<th:block th:each="itemlstWorkTimeUser : ${userDto.lstWorkTime}">
+										<div class="form-check form-check-inline">
+											<input checked class="form-check-input  " type="checkbox"
+												name="workTimeIdOld" id="" onclick="return false;"
+												th:value="${itemlstWorkTimeUser.id}"> <label
+												th:utext="${itemlstWorkTimeUser.time}" class="form-check-label "
+												for="inlineCheckbox1"></label>
+										</div>
+									</th:block>
+								</div>
+							</div>
+							<div class="col-md-12 col-24">
+								<div class="form-group">
+								<label for="email-id-column">Chỉnh sửa lịch khám </label>
+								<input  class="form-check-input " type="checkbox"  
+												name="" id="editLich"
+												> 
+								</div>
+								</div>
+							
+								<div class="col-md-12 col-24" id="editLichKham" hidden="true">
+								<div class="form-group">
+									<label for="email-id-column">Chọn ca khám </label>
+									<th:block th:each="itemlstWorkTime : ${lstWorkTime}">
+										<div class="form-check form-check-inline">
+										
+											<input  class="form-check-input checkWorkTime" type="checkbox"
+												name="workTimeId" id="inlineCheckbox1"
+												th:value="${itemlstWorkTime.id}"> <label
+												th:utext="${itemlstWorkTime.time}" class="form-check-label "
+												for="inlineCheckbox1"></label>
+										
+											
+										</div>
+									</th:block>
+								</div>
+							</div>
+
+					<div class="col-md-12 col-12">
+						<div class="form-group">
+							<label for="examinationPrice">Giá khám (VNĐ)</label> <input type="number"
+																			  id="examinationPrice" class="form-control" name="examinationPrice"
+																			  placeholder="Email" th:value="${userDto.examinationPrice}">
+						</div>
+					</div>
+
+							<!--  -->
+							</th:block>
+							
+							<div class="col-md-12 col-24">
+								<div class="form-group">
+									<label for="email-id-column">Mô tả ngắn</label>
+									<textarea rows="12" cols="auto" class="form-control"
+										name="shortDescription" id="shortDescription" th:utext="${userDto.shortDescription}"></textarea>
+
+								</div>
+							</div>
+
+							<div class="col-md-12 col-24">
+								<div class="form-group">
+									<label for="email-id-column">Mô tả</label>
+									<textarea rows="12" cols="auto" class="form-control"
+										name="description" id="description" th:utext="${userDto.description}"></textarea>
+
+								</div>
+							</div>
+							<div class="col-md-12 col-24">
+								<div class="form-group">
+								<label for="email-id-column">Đổi mật khẩu</label>
+								<input  class="form-check-input " type="checkbox"  
+												name="" id="editPassword"
+												> 
+								</div>
+								</div>
+									<div class="col-md-12 col-24" id="changePassword" hidden="true">
+								
+								<div class="form-group">
+									<label for="email-id-column">Mật khẩu</label> <input  class="form-control" type="password"
+												name="password" id="password"> 
+								</div>
+								<div class="form-group">
+									<label for="email-id-column">Xác nhận lại mật khẩu</label> <input  class="form-control" type="password"
+												name="confirmPassword" id="confirmPassword"> 
+								</div>
+								<button class="btn btn-primary profile-button" type="button">Đổi mật khẩu</button>
+										
+									
+							
+							</div>
+
+
+						</div>
+						<div class="mt-5 text-center">
+							<button id="btnUpdateProfile" class="btn btn-primary profile-button" type="button">Save
+								Profile</button>
+						</div>
+					</div>
+					
+				</div>
+				
+				<!-- <div class="col-md-4">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center experience"><span>Edit Experience</span><span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;Experience</span></div><br>
+                <div class="col-md-12"><label class="labels">Experience in Designing</label><input type="text" class="form-control" placeholder="experience" value=""></div> <br>
+                <div class="col-md-12"><label class="labels">Additional Details</label><input type="text" class="form-control" placeholder="additional details" value=""></div>
+            </div>
+        </div> -->
+			</div>
+			</form>
+		</div>
+
+
+	</section>
+
+	  <script layout:fragment="js" th:src="@{/admin/assets/js/editProfile.js}"></script>
+</body>
+
+</html>

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/masterLayout.html}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Manager Hospital</title>
+</head>
+<body>
+<section class="row" layout:fragment="content">
+    <div class="card-group"><h5> Danh sách cơ sở y tế đã xoá</h5></div>
+    <div class="container-fluid">
+        <div class="card shadow mb-4">
+            <div class="card-header py-4 d-flex flex-row-reverse">
+                <form method="POST" action="" enctype="multipart/form-data"
+                      id="uploadHospital">
+
+                    <button type="button" style="width: 60px;" class="btn btn-primary"
+                            title="Khôi phục cơ sở ý "
+                            data-toggle="modal" data-target="#dialogConfirmRestore" id="btnAddHospital">
+							<span>
+                                <span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-reply-fill" viewBox="0 0 16 16">
+                                      <path d="M5.921 11.9 1.353 8.62a.719.719 0 0 1 0-1.238L5.921 4.1A.716.716 0 0 1 7 4.719V6c1.5 0 6 0 7 8-2.5-4.5-7-4-7-4v1.281c0 .56-.606.898-1.079.62z"/>
+                                    </svg>
+							    </span>
+							</span>
+                    </button>
+
+                    <button style="width: 60px;" id="btnEditHospital" type="button"
+                            class="dt-button buttons-html5 btn btn-white btn-primary btn-bold"
+                            data-toggle="modal" data-target="#exampleModal"
+                            title='Chi tiết cơ sở ý tế'>
+							<span>
+                                <span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-info-circle" viewBox="0 0 16 16">
+                                      <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                      <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                                    </svg>
+							    </span>
+							</span>
+                    </button>
+                    <button style="width: 60px;" id="btnDeleteHospital" type="button"
+                            class="dt-button buttons-html5 btn btn-white btn-primary btn-bold"
+                            data-toggle="modal" data-target="#dialogConfirmDelete" title='Xóa vĩnh viễn'>
+							<span> <i class="far fa-trash-alt"></i>
+							</span>
+                    </button>
+
+                    <!-- Modal -->
+
+                    <div class="modal fade" id="exampleModal" tabindex="-1"
+                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-xl" role="document">
+                            <div class="modal-content">
+
+                                <div class="modal-body">
+                                    <div class="row match-height">
+                                        <div class="col-12">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h4 class="card-title">Quản lý bệnh viện</h4>
+                                                </div>
+                                                <div class="card-content">
+                                                    <div class="card-body">
+
+                                                        <div class="row">
+                                                            <div class="col-md-12 col-24">
+                                                                <div class="form-group">
+                                                                    <label for="first-name-column">Tên bệnh viện</label>
+                                                                    <input readonly
+                                                                            type="text" class="form-control"
+                                                                            placeholder="Tên bệnh viện" name="name"
+                                                                            id="name">
+                                                                    <input name="id" type="hidden"
+                                                                           id="id">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12 col-24">
+                                                                <div class="form-group">
+                                                                    <label for="first-name-column">Ảnh bệnh viện</label>
+                                                                    <div class="col-12 col-lg-6 col-md-6">
+                                                                        <img src="" type="file" class="form-control" id="img"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12 col-24">
+                                                                <div class="form-group">
+                                                                    <label for="first-name-column">Địa chỉ</label>
+                                                                    <input readonly
+                                                                            type="text" class="form-control"
+                                                                            placeholder="Địa chỉ" name="location"
+                                                                            id="location">
+
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-12 col-24">
+                                                                <div class="form-group">
+                                                                    <label for="first-name-column">Bản đồ</label>
+                                                                    <br>
+                                                                    <div id="map" class="form-control"
+                                                                         style="min-height: 300px;"></div>
+                                                                    <label for="longitude">Kinh độ</label>
+                                                                    <input type="number" id="longitude" name="longitude" readonly
+                                                                           class="form-control"
+                                                                           placeholder="x.xxx"/>
+                                                                    <label for="latitude">Vĩ độ</label>
+                                                                    <input type="number" id="latitude" name="latitude" readonly
+                                                                           class="form-control"
+                                                                           placeholder="x.xxx"/>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-12 col-24">
+                                                                <div class="form-group">
+                                                                    <label for="first-name-column">Mô tả ngắn</label>
+                                                                    <div readonly=""
+                                                                            type="text" class="form-control"
+                                                                            placeholder="Mô tả ngắn" name="description"
+                                                                            id="description"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Close
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </form>
+            </div>
+
+
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped" id="dataTable" width="100%"
+                           cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th class="check-box min-width"
+                                style="padding-left: 12px; padding-top: 10px; width: 7%">
+                                <label class="d-flex justify-content-center">Chọn tất
+                                    cả</label>
+                                <div style="display: flex;">
+
+                                    <input class="d-flex justify-content-center" type="checkbox"
+                                           style="margin: auto;" name="selectBox" id="checkAll">
+                                </div>
+                            </th>
+                            <th><label class="d-flex justify-content-center">Tên
+                                bệnh viện</label></th>
+                            <th><label class="d-flex justify-content-center">Ảnh đại diện</label></th>
+                            <th><label class="d-flex justify-content-center">Địa chỉ
+                            </label></th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <th:block th:each="itemHospital : ${lstHospital}">
+                            <tr>
+                                <td class="d-flex justify-content-center get " style="padding: 45px 0 45px 0"><input
+                                        id="checkOne" name="checkOne" type="checkbox" th:value="${itemHospital.id}"
+                                ></td>
+                                <td style="text-align: center;" th:utext="${itemHospital.name}"></td>
+                                <td style="text-align: center; width: 25%;"><img
+                                        style="display: block; margin-left: auto; width: 25%; margin-right: auto;"
+                                        class="product__item-img" th:src="${itemHospital.img}"
+                                />
+                                </td>
+                                <td style="text-align: center;" th:utext="${itemHospital.location}"></td>
+                                <td style="display: none; visibility: hidden; width: 0px !important; height: 0px !important;"
+                                    th:utext="${itemHospital.description}"></td>
+                                <td style="display: none; visibility: hidden; width: 0px !important; height: 0px !important;"
+                                    th:utext="${itemHospital.img}"></td>
+                                <th:block th:if="${itemHospital.longitude}">
+                                    <td style="display: none; visibility: hidden; width: 0px !important; height: 0px !important;"
+                                        th:utext="${itemHospital.longitude}"></td>
+                                    <td style="display: none; visibility: hidden; width: 0px !important; height: 0px !important;"
+                                        th:utext="${itemHospital.latitude}"></td>
+                                </th:block>
+                                <th:block th:unless="${itemHospital.longitude}">
+                                    <td style="display: none; visibility: hidden; width: 0px !important; height: 0px !important;"></td>
+                                    <td style="display: none; visibility: hidden; width: 0px !important; height: 0px !important;"></td>
+                                </th:block>
+
+                                <input name="id" type="hidden" id="descriptionHtml"
+                                       th:value="${itemHospital.description}">
+                            </tr>
+                        </th:block>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="container d-flex align-items-center justify-content-center">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination" id="pagination"></ul>
+                    </nav>
+                </div>
+                <form action="" method="GET" id="formPagination">
+                    <input type="hidden" id="page" name="page"/>
+                    <input type="hidden" th:value="${curentPage}" id="curentPage"/>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal fade" id="ok" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Thông báo</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Thao tác thành công</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal fade" id="dialogConfirmDelete" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Thông báo</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Bạn chắc chắn muốn xoá VĨNH VIỄN cơ sở y tế này chứ</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btnConfirmDelete" data-dismiss="modal">Xoá</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Huỷ</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal fade" id="dialogConfirmRestore" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Thông báo</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Bạn chắc chắn muốn KHÔI PHỤC cơ sở y tế này chứ</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btnConfirmRestore" data-dismiss="modal">Khôi phục
+                    </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Huỷ</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <input type="hidden" th:value="${totalPage}" id="totalPage"/>
+</section>
+<script layout:fragment="js" th:src="@{/admin/assets/js/managerHospitalUDelete.js}"></script>
+<script layout:fragment="jsMap" th:src="@{/admin/assets/js/handlerGgMap.js}"></script>
+
+</body>
+
+</html>

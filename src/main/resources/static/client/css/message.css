@@ -1,0 +1,19 @@
+.message{
+    background-color:var(--orange);
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    font-size: 4rem;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    text-decoration: none;
+    opacity: 1;
+    z-index: 30;
+    color: aqua;
+    animation: 1.5s infinite Rung;
+  }

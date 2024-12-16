@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+
+</head>
+<body>
+<div id="sidebar" class="active" th:fragment="menu">
+    <div class="sidebar-wrapper active">
+        <div class="sidebar-header">
+            <div class="d-flex justify-content-between">
+                <div class="logo">
+                    <a href="/admin/home" th:text="${#session.getAttribute('userDetails').fullName}"><img
+                            th:src="@{/admin/assets/images/logo/logo.png}" alt="Logo"
+                            srcset=""></a>
+                </div>
+                <div class="toggler">
+                    <a href="#" class="sidebar-hide d-xl-none d-block"><i
+                            class="bi bi-x bi-middle"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar-menu">
+            <ul class="menu">
+                <li class="sidebar-title">Menu</li>
+                <input type="hidden" th:value="${#session.getAttribute('userDetails').id}" id="userLoginId"/>
+                <th:block th:unless="${#session.getAttribute('userDetails').roles.contains('ROLE_ADMIN')}">
+                    <input type="hidden" th:value="${#session.getAttribute('userDetails').id}" id="myId"/>
+                </th:block>
+                <th:block th:if="${#session.getAttribute('userDetails').roles.contains('ROLE_ADMIN')}">
+                    <input type="hidden" value="0" id="myId"/>
+                    <li class="sidebar-item  has-sub"><a href="#"
+                                                         class='sidebar-link'> <i class="bi bi-person-lines-fill"></i>
+                        <span>Quản lý người dùng</span>
+                    </a>
+                        <ul class="submenu ">
+                            <li class="submenu-item "><a href="managerUser">Danh sách người dùng</a></li>
+                            <li class="submenu-item "><a href="managerUDeleteUser">Danh sách người dùng đã xoá</a></li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-item  has-sub"><a href="#"
+                                                         class='sidebar-link'> <i class="bi bi-stack"></i> <span>Quản lý chuyên khoa</span>
+                    </a>
+                        <ul class="submenu ">
+                            <li class="submenu-item "><a href="managerSpecialized">Danh sách chuyên khoa</a></li>
+                            <li class="submenu-item "><a href="managerUDeleteSpecialized">Danh sách chuyên khoa đã
+                                xoá</a></li>
+                        </ul>
+                    </li>
+                </th:block>
+
+                <li class="sidebar-item  has-sub"><a href="#"
+                                                     class='sidebar-link'><i class="bi bi-book-fill"></i>
+                    <span>Cẩm nang</span>
+                </a>
+                    <ul class="submenu ">
+                        <li class="submenu-item "><a href="managerHandbook">Danh sách bài viết</a></li>
+                        <li class="submenu-item "><a href="managerUDeleteHandbook">Danh sách bài viết đã xoá</a></li>
+
+                    </ul>
+                </li>
+                <th:block th:if="${#session.getAttribute('userDetails').roles.contains('ROLE_ADMIN')}">
+                    <li class="sidebar-item  has-sub"><a href="#"
+                                                         class='sidebar-link'><i
+                            class="bi bi-shop"></i><span>Cơ sở y tế</span>
+                    </a>
+                        <ul class="submenu ">
+                            <li class="submenu-item "><a href="managerHospital">Danh sách cơ sở y tế</a></li>
+                            <li class="submenu-item "><a href="managerUDeleteHospital">Danh sách cơ sở y tế đã xoá</a>
+                            </li>
+                        </ul>
+                    </li>
+                </th:block>
+
+                <li class="sidebar-item  has-sub"><a href="#"
+                                                     class='sidebar-link'> <i class="bi bi-chat-right-text-fill"></i>
+                    <span>Chat Box</span>
+                </a>
+                    <ul class="submenu ">
+                        <li class="submenu-item "><a href="managerChat">Manager
+                            Chat</a></li>
+                    </ul>
+                </li>
+
+                <li class="sidebar-item  has-sub"><a href="#"
+                                                     class='sidebar-link'> <i class="bi bi-calendar-date-fill"></i></i>
+                    <span>Quản lý lịch khám</span>
+                </a>
+                    <ul class="submenu ">
+                        <li class="submenu-item "><a href="managerMedical">Danh sách lịch chưa khám </a></li>
+                        <li class="submenu-item "><a href="managerMedicalComplete">Lịch khám đã hoàn thành </a></li>
+                        <li class="submenu-item "><a href="managerMedicalCancel">Lịch khám đã huỷ </a></li>
+                    </ul>
+                </li>
+
+                <li class="sidebar-item  has-sub"><a href="#"
+                                                     class='sidebar-link'>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         class="bi bi-calendar" viewBox="0 0 16 16">
+                        <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                    </svg>
+                    <span>Cài đặt ngày nghỉ</span>
+                </a>
+                    <ul class="submenu ">
+                        <th:block th:if="${#session.getAttribute('userDetails').roles.contains('ROLE_DOCTOR')}">
+                            <li class="submenu-item "><a href="managerHoliday">Ngày nghỉ của tôi </a></li>
+                        </th:block>
+                        <th:block th:if="${#session.getAttribute('userDetails').roles.contains('ROLE_ADMIN')}">
+                            <li class="submenu-item "><a href="managerHoliday">Danh sách ngày nghỉ</a></li>
+                        </th:block>
+                    </ul>
+                </li>
+
+                <th:block th:if="${#session.getAttribute('userDetails').roles.contains('ROLE_ADMIN')}">
+                    <li class="sidebar-item  has-sub"><a href="#"
+                                                         class='sidebar-link'> <i class="bi bi-graph-up"></i></i>
+                        <span>Báo cáo</span>
+                    </a>
+                        <ul class="submenu ">
+                            <li class="submenu-item "><a href="salesReport">Báo cáo doanh thu </a></li>
+                        </ul>
+                    </li>
+                </th:block>
+
+                <li class="sidebar-item  has-sub"><a href="#"
+                                                     class='sidebar-link'><i class="bi bi-person-fill"></i><span>Thông tin cá nhân
+						</span>
+                </a>
+                    <ul class="submenu ">
+                        <li class="submenu-item "><a href="editProfile">Chỉnh sửa thông tin cá nhân</a></li>
+                        <li class="submenu-item "><a href="/logout">Đăng xuất</a></li>
+                        <!--                        <li class="submenu-item "><a href="/home">Chuyển tới giao diện người dùng</a></li>-->
+
+                    </ul>
+                </li>
+
+
+            </ul>
+        </div>
+        <button class="sidebar-toggler btn x">
+            <i data-feather="x"></i>
+        </button>
+    </div>
+</div>
+</body>
+</html>

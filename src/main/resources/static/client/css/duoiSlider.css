@@ -1,0 +1,473 @@
+.xet-covid{
+    /* background: #fff; */
+    width: 100%;
+    /* margin: 5rem 20rem; */
+    width: 90%;
+    margin: auto;
+    margin-top: 1.5rem;
+}
+.xet-covid h1{
+    font-size: 3rem;
+    padding: 15px 0 15px 0;
+}
+.xet-covid p{
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+.xet-covid h2{
+    font-size: 1.5rem;
+}
+.xet-covid ul li{
+    font-size: 1.3rem;
+    margin: 1rem;
+}
+
+.item-infor{
+    /* width: 70%;
+    margin: auto;
+    box-shadow: 2px 2px 2px 1px ;
+    margin-top: 20px;
+    border-radius: 5px; */
+
+    padding: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    border-radius: 14px;
+    background-color: white;
+    margin: auto;
+    width: 80%;
+    margin-top: 1.6rem;
+}
+.cot-1-img{
+    height: 80px;
+    border-radius: 50%;
+    margin-right: 1.6rem;
+}
+.cot-1{
+        padding: 20px;
+        display: flex;
+}
+.icon-kham{
+    margin-right: 10px;
+    color: #45c3d2;
+}
+.cot-1 h2{
+    font-size: 2rem;
+    color: #45c3d2;
+    margin-bottom: 1.5rem;
+}
+.cot-1 span{
+    display: block;
+    font-size: 1.4rem;
+    font-weight: 400;
+    margin-bottom: 5px;
+}
+.cot-1 span i{
+    color: #000;
+    margin-right: 5px;
+}
+.cot-2{
+    padding: 20px;
+}
+.cot-2 p {
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin-bottom: 1.6rem;
+    max-width: 90%;
+}
+.time{
+    display: flex;
+    justify-content: start;
+    flex-wrap: wrap;
+}
+.time-link{
+    padding: 1rem;
+    text-decoration: none;
+    color: #000;
+    font-size: 1.2rem;
+    background: #ccc;
+    margin: 5px;
+    border-radius: 4px;
+}
+.info{
+    margin-top: 5px;
+    font-size: 1.4rem;
+}
+.dia-chi{
+    font-size: 1.6rem;
+}
+.dia-chi p{
+    margin: 5px 0 5px 0;
+}
+select{
+    margin-bottom: 5px;
+    padding: .5rem;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.price{
+    margin-top: 5px;
+}
+.space{
+    margin-top: 1.6rem;
+}
+
+
+/* bÃ¡c sÄ© ná»•i báº­t tuáº§n qua  */
+.doctor{
+    display: flex;
+    padding-top:30px ;
+    max-width: 800px;
+    margin: auto;
+}
+.dotor-info{
+    padding: 20px;
+}
+.dotor-img{
+    height: 150px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+.dotor-heading{
+    font-size: 27px;
+}
+.dotor-list{
+    list-style: none;
+    margin-top: 20px;
+    font-size: 1.6rem;
+    color: #000;
+    line-height: 1.6rem;
+}
+.btn-doctor{
+    padding: .4rem;
+    background: #4080ff;
+    border: none;
+    outline: none;
+    border-radius: 3px;
+    margin-top: 1.2rem;
+    cursor: pointer;
+    color: #fff;
+}
+
+.doctor-des{
+    /* list-style: none; */
+    max-width: 600px;
+    margin-left: 60px;
+    margin-top: 30px;
+}
+.doctor-des-item{
+    font-size: 14px;
+    margin: 5px 0 0 2rem;
+
+}
+.doctor-des h2{
+    font-size: 20px;
+}
+/* Cam nang  */
+.Cam-nang{
+    margin-top: 73px;
+}
+.camnang-heading{
+    text-align: center  ;
+    font-size: 24px;
+    padding: 20px;
+}
+.author{
+    font-size: 1.4rem;
+}
+.author-item{
+    padding: .8rem;
+}
+.author-item a{
+    color: #45c3d2;
+}
+.bai-viet{
+    font-size: 1.8rem;
+    text-align: justify;
+    margin: 1rem;
+}
+.des{
+    text-align: justify;
+    font-size: 1.6rem;
+    margin: 1rem;
+    line-height: 2rem;
+    max-width: 700px;
+    margin: 1rem auto;
+}
+.heading-text{
+    font-size: 2rem;
+    text-align: center;
+    margin: 2rem 0 2rem 0;
+}
+.duoi-item{
+    font-size: 1.4rem;
+    max-width: 600px;
+    text-align: justify;
+    margin: auto;
+    line-height: 2rem;
+}
+.colo-item-duoi{
+    color: #45c3d2;
+    font-size: 1.6rem !important;
+    margin-top: 1.4rem ;
+}.img-6{
+    max-width: 600px;
+    margin: auto;
+}
+.buoc-6{
+
+    text-align: center;
+}
+
+.danh-muc-cam-nang{
+    max-width: 1200px;
+    margin: 1rem  auto;
+    
+}
+
+/* dÃ nh cho bá»‡nh nhÃ¢n  */
+.heading-danh-cho-benh-nhan{
+    text-align: left;
+    font-size: 3rem;
+    margin-top: 2rem;
+    color: #45c3d2;
+}
+.danh-benhnhan-list{
+    text-align: left;
+    margin:1.6rem 0 0  3rem;
+    list-style: none;
+    font-size: 1.6rem;
+    line-height: 1.6rem;
+}
+.danh-benhnhan-item{
+    padding: 1rem;
+}
+.heading-content{
+    text-align: left;
+    font-size: 3rem;
+    margin-top: 2rem;
+    color: #45c3d2;
+}
+.content-body{
+    text-align: center;
+    margin-top: 3rem;
+    border: 1px solid #ccc;
+    padding: 5rem;
+
+}
+.content-body i{
+    font-size: 5rem;
+    color: #45c3d2;
+    margin-bottom: 1rem;
+}
+.text{
+    font-size: 1.6rem;
+}
+.des-text{
+    font-size: 1.3rem;
+    margin-top: 1rem;
+}
+.list-benefit{
+
+    list-style: none;
+}
+.heading-heading{
+    text-align: center;
+    font-size: 3rem;
+    margin-top: 2rem;
+    color: #45c3d2;
+}
+.list-benefit-item{
+    font-size: 1.4rem;
+    padding: 1rem;
+    text-align: center;
+    border-bottom: 1px solid #ccc;
+}
+/* quy trÃ¬nh há»— trá»� vÃ  giair quyáº¿t khiáº¿u náº¡i */
+.content-kn{
+    padding: 2rem;
+    text-align: left;
+    max-width: 600px;
+    margin: auto;
+}
+.content-kn p{
+    font-size: 1.6rem;
+    margin-bottom: 1.6rem;
+}
+.list-kn{
+    font-size: 1.4rem;
+    margin-top: 1rem;
+    line-height: 2rem;
+}
+/* dÃ nh cho bÃ¡c si */
+.content-bacsi-item{
+    height: 300px;
+}
+.content-bacsi-item img{
+    height: 100%; 
+}
+/* Ä‘Äƒth lá»‹ch khÃ¡m  */
+.heading-book{
+    max-width: 600px;
+    margin:  2rem auto;
+    background: #ccc;
+    border-radius: 5px;
+    display: flex;
+    padding: 2rem;
+}
+.heading-book img{
+    border-radius: 50%;
+    margin-right: 2rem;
+}
+.heading-book h2{
+    font-size: 2rem;
+}
+.time-book{
+    font-size: 1.6rem;
+    padding: 1rem;
+}
+.dotor-book{
+    font-size: 1.6rem;
+    color: #4080ff;
+    padding: 1rem;
+}
+.book-input{
+    max-width: 600px;
+    margin: 3rem auto;
+
+}
+.book-input span{
+    font-size: 1.4rem;
+}
+.book-input label{
+    font-size: 1.4rem;
+}
+.nguoi{
+    font-size: 2rem;
+}
+textarea{
+    width: 100%;
+    margin-left: 5px;
+}
+.input__book{
+    display: block;
+    width: 100%;
+    padding: .6rem;
+    margin: .5rem;
+}
+.input-checkbox{
+    margin-top: 5px;
+}
+.thanh-toan{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+    font-size: 1.6rem;
+}
+.left{
+    list-style: none;
+    
+}
+.giakham{
+    margin-top: 5px;
+}
+
+.right{
+    list-style: none;
+}
+.input-render{
+    display: flex;
+}
+button{
+    width: 100%;
+    padding: .8rem;
+    margin-top: .8rem;
+    background: #4080ff;
+    cursor: pointer;
+}
+.abc{
+    display: block;
+}
+.minh-an.hide{
+    display: none;
+}
+.hide-cho-nguoi{
+    display: none;
+}
+.hide-cho-nguoi.ok{
+    display: block;
+}
+.chominh-hide.okok {
+    display: none;
+}
+
+/* bổ sung danh sách cẩm nang  */
+.timkiem__input{
+    display: flex;
+    margin-top: 2rem;
+    box-shadow: 1px 1px 1px 1px;
+    border-radius: 5px;
+}
+.headerr{
+    font-size: 2rem;
+    font-weight: 500;
+    margin: 1.6rem;
+}
+.input-left{
+    margin: 2rem;
+    display: flex;
+}
+.input-right{
+    margin: 2rem;
+   
+}
+.form-control-input{
+    margin: 1rem;
+}
+.form-control-input label{
+    display: block;
+    color: #242424;
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+}
+.form-control-input input{
+    width: 600px;
+    padding: .5rem;
+    border-radius: 5px;
+    outline: none;
+}
+.chuyenkhao-select{
+    width: 100px;
+}
+.btn-camnang{
+       display: flex;
+       align-items: center;
+       position: relative;
+       top: 11px;
+       padding: .5rem;
+}
+.camnang-btn{
+    background-color: #45c3d2;
+    padding: .5rem !important;
+    width: 60px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+/* css bên trang bác sĩ*/
+.input-right{
+    display: flex;
+}
+.form-control-input-right {
+    margin-right: 1rem;
+}
+.form-control-input-right input{
+    width: 400px;
+    padding: .5rem;
+    border-radius: 5px;
+    outline: none;
+}
+.form-control-input-right label{
+    display: block;
+    color: #242424;
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+}

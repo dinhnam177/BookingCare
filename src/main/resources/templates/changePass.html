@@ -1,0 +1,28 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Spring Boot  Hello</title>
+<link th:href="@{/client/changePass.css}" rel="stylesheet" type="text/css">
+</head>
+<body>
+  <h2></h2>
+<form method="POST" action="/changePass">
+	<label id="form-lable">Current Password</label>
+	<div>
+		<input type="password" name="tPass" id="curentPass" required>
+	</div>
+    <label id="form-label">New Password</label>
+    <div>
+        <input type="password" name="n-password" id="input-field" required>
+    </div>
+    <label id="form-label">Confirm Password</label>
+    <div>
+        <input type="password" name="c-password" id="input-field" required>
+    </div>
+    <input type="submit" value="Submit" name="reset" id="form-btn">
+</form>
+  
+</body>
+</html>

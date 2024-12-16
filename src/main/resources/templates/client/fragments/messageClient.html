@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+ <div th:fragment="messageClient">
+	<div class="form-chat"  >
+		<div class="form-chat-header">
+			<i class="fas fa-window-close js-close"></i>
+		</div>
+		<div class="header-chat">
+			<img
+				src=""
+				alt="" id="avatar">
+			<p id='fullName'></p>
+		</div>
+		<div id="showMessgae" class="chieucao-scroll" >
+			<!-- <div class="container">
+				<img th:src="@{client/img/img12.jpg}" alt="Avatar"
+					style="width: 100%;">
+				<p>Hello. How are you today?</p>
+				<span class="time-right">11:00</span>
+			</div>
+
+			<div class="container darker">
+				<img th:src="@{client/img/img2.jpg}" alt="Avatar" class="right"
+					style="width: 100%;">
+				<p>Hey! I'm fine. Thanks for asking!</p>
+				<span class="time-left">11:01</span>
+			</div>
+
+			<div class="container">
+				<img th:src="@{client/img/img3.jpg}" alt="Avatar"
+					style="width: 100%;">
+				<p>Sweet! So, what do you wanna do today?</p>
+				<span class="time-right">11:02</span>
+			</div>
+
+			<div class="container darker">
+				<img th:src="@{client/img/img4.jpg}" alt="Avatar" class="right"
+					style="width: 100%;">
+				<p>Nah, I dunno. Play soccer.. or learn more coding perhaps?</p>
+				<span class="time-left">11:05</span>
+			</div> -->
+			
+		</div>
+		<form id="messageForm" name="messageForm" onsubmit="return false;" >
+			<div class="container flexs">
+				<ul class="icons">
+					<li class="icons-item"><i class="fas fa-plus icons-lpus"></i>
+					</li>
+					<li class="icons-item"><i class="fas fa-camera icons-camera"></i>
+					</li>
+				</ul>
+				<input type="text" id="message" class="container-input"
+					placeholder="here..." /> <a class=" like">
+					<button >
+						<i class="fas fa-location-arrow"></i>
+					</button>
+
+				</a>
+			</div>
+
+
+			<div class="container container-ipfile ">
+				<input type="file" id="input-file">
+			</div>
+		</form>
+	</div>
+	<th:block th:if="${#session.getAttribute('userDetails')}">
+		<div class="message">
+			<i class="fab fa-facebook-messenger"></i>
+		</div>
+	</th:block>
+	<!-- <th:block th:if="${#session.getAttribute('userDetails')"> -->
+	<th:block th:unless="${#session.getAttribute('userDetails')}">
+		<a href="/login" class="message"> <i class="fab fa-facebook-messenger"></i>
+		</a>
+	</th:block>
+ 	</div>
+</body>
+</html>

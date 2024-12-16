@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{client/masterLayout.html}">
+<head>
+<meta charset="ISO-8859-1">
+<title>ÄÄng nháº­pÂ</title>
+<link rel="stylesheet" th:href="@{/client/css/duoiSlider.css}">
+</head>
+<body>
+
+	<div class="content__search-form" layout:fragment="content">
+           <form class="user" action="/register" method="post" id="form-1">
+            
+                <div class="form-heading ">
+                    <h3 class="heading-login">Đăng Ký</h3>
+                </div>
+                <div class="spacer"></div>
+                <div class="form-body">
+                    <div class="form-group">
+                        <label for="username" class="form-label">Tên đầy đủ</label>
+                        <input id="username" name="username" type="text" placeholder="VD: Nguyễn Văn A" class="form-control">
+                        <span class="form-message"></span>
+                        <div id="msg"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email</label>
+                        <input id="email" name="email" type="text" placeholder="VD:NguyenVanA@gmail.com" class="form-control">
+                        <span class="form-message"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone" class="form-label">Phone Number</label>
+                        <input id="phone" name="phone" type="text" placeholder="VD:0988888888" class="form-control">
+                        <span class="form-message"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="form-label">Mật Khẩu </label>
+                        <input id="exampleInputPassword" name="password" type="password" placeholder="*********" class="form-control">
+                        <span class="form-message"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" class="form-label"> Nhập lại Mật Khẩu </label>
+                        <input id="exampleRepeatPassword"  type="password" placeholder="*********" class="form-control">
+                        <span class="form-message"></span>
+                    </div>
+                 
+                </div>
+                <button type="submit" class="form-submit" value="Register" >Register</button>
+                 
+            </form>
+   
+	</div>
+	<div class="space"></div>
+
+ <script layout:fragment="js" th:src="@{/client/js/register.js}"></script>
+</body>
+</html>

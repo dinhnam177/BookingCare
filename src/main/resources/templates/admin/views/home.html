@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/masterLayout.html}">
+
+<head>
+    <title>Booking Care</title>
+</head>
+
+<body>
+<section class="row" layout:fragment="content">
+    <div id="infoTotalMedical">
+        <div class="row">
+            <div class="col-6 col-lg-3 col-md-6">
+                <div class="card">
+                    <div class="card-body px-3 py-4-5">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="stats-icon purple">
+                                    <i class="bi bi-calendar3"></i>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <h6 class="text-muted font-semibold">Số lần đặt lịch</h6>
+                                <h6 class="font-extrabold mb-0" id='totalMedical'>112.000</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3 col-md-6">
+                <div class="card">
+                    <div class="card-body px-3 py-4-5">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="stats-icon red ">
+                                    <i class="bi bi-x-circle"></i>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <h6 class="text-muted font-semibold">Ca khám đã huỷ</h6>
+                                <h6 class="font-extrabold mb-0" id="totalMedicalCancel">183.000</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3 col-md-6">
+                <div class="card">
+                    <div class="card-body px-3 py-4-5">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="stats-icon green">
+                                    <i class="bi bi-check2-square"></i>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <h6 class="text-muted font-semibold">Ca khám thành công</h6>
+                                <h6 class="font-extrabold mb-0" id="totalMedicalComplete">80.000</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3 col-md-6">
+                <div class="card">
+                    <div class="card-body px-3 py-4-5">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="stats-icon blue">
+                                    <i class="bi bi-hourglass-split"></i>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <h6 class="text-muted font-semibold">Ca khám đang chờ </h6>
+                                <h6 class="font-extrabold mb-0" id="totalMedicalWait">112</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--  -->
+    <div class="card shadow mb-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Doanh thu theo tháng</h4>
+                    </div>
+                    <div class="card-body">
+                        <div id="chart-profile-visit-test"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow mb-4">
+        <div class="row">
+            <div class="col-12 col-xl-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Doanh thu theo hình thức khám</h4>
+                    </div>
+                    <div class="card-body">
+                        <div id="chart-area-two"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-xl-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Doanh thu theo hình thức khám</h4>
+                    </div>
+                    <div class="card-body">
+                        <div id="chart-visitors-profile-test"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-xl-8">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Bài viết nổi bật</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-lg">
+                            <thead>
+                            <tr>
+                                <th>Ảnh bài viết</th>
+                                <th>Tên bài viết</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <th:block th:each="item, iState : ${featureHandbooks}">
+                                <tr>
+                                    <td class="col-3">
+                                        <div class="d-flex align-items-center">
+                                            <div class="avatar avatar-lg">
+                                                <img th:src="${item.img}">
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="col-auto">
+                                        <p class=" mb-0" th:text = "${item.getTitle()}">Congratulations on your graduation!</p>
+                                    </td>
+                                </tr>
+                            </th:block>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-xl-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Bác sĩ nổi bật</h4>
+                </div>
+                <div class="card-content pb-4">
+                    <th:block th:each="item, iState : ${featureUsers}">
+                        <div class="recent-message d-flex px-4 py-3">
+                            <div class="avatar avatar-lg">
+                                <img th:src="${item.img}">
+                            </div>
+                            <div class="name ms-4">
+                                <h5 class="mb-1" th:text="${item.getName()}"></h5>
+                                <p class=" mb-0" th:text="${item.getSpecializedName()}"></p>
+                            </div>
+                        </div>
+                    </th:block>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+<script layout:fragment="js" th:src="@{/admin/assets/js/home.js}"></script>
+</body>
+
+</html>

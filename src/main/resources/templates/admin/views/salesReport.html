@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/masterLayout.html}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Manager User</title>
+</head>
+<body>
+<section class="row" layout:fragment="content">
+    <div class="container-fluid">
+        <!--  -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-4 d-flex flex-row-reverse">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label>Loại báo cáo</label>
+                                <select name="typeReport" class="form-control" id="typeReport">
+                                    <option value="1" selected>Doanh thu tổng quát</option>
+                                    <option value="2">Hình thức khám bệnh</option>
+                                    <option value="3">Doanh thu theo cơ sở y tế</option>
+                                    <option value="4">Doanh thu bác sĩ</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label>Thời gian</label>
+                                <select name="timeReport" class="form-control" id="timeReport">
+                                    <option value="5" selected>Tháng trước</option>
+                                    <option value="1">Hôm nay</option>
+                                    <option value="2">Hôm qua</option>
+                                    <option value="3">7 ngày qua</option>
+                                    <option value="4">Tháng này</option>
+                                    <option value="6">Tuỳ chọn thời gian</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12" id="selectTimeReport" style="display: none">
+                            <div class="form-group">
+                                <label>Tuỳ chọn hời gian</label>
+                                <div class="row">
+                                    <div class="col-md-6 col-12">
+                                        <input type='date' class="form-control" id="startTimeReport"/>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <input type='date' class="form-control" id="endTimeReport"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button id="btnReport" class="btn btn-primary">Xem báo cáo
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="overviewReport" style="display: none">
+            <div class="card shadow mb-4" id="infoTotalMedical">
+                <div class="row">
+                    <div class="col-6 col-lg-3 col-md-6">
+                        <div class="card">
+                            <div class="card-body px-3 py-4-5">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="stats-icon purple">
+                                            <i class="bi bi-calendar3"></i>
+                                            <!--                                        <i class="iconly-boldShow"></i>-->
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <h6 class="text-muted font-semibold">Số lần đặt lịch</h6>
+                                        <h6 class="font-extrabold mb-0" id='totalMedical'>112.000</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-3 col-md-6">
+                        <div class="card">
+                            <div class="card-body px-3 py-4-5">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="stats-icon red ">
+                                            <i class="bi bi-x-circle"></i>
+                                            <!--                                        <i class="iconly-boldProfile"></i>-->
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <h6 class="text-muted font-semibold">Ca khám đã huỷ</h6>
+                                        <h6 class="font-extrabold mb-0" id="totalMedicalCancel">183.000</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-3 col-md-6">
+                        <div class="card">
+                            <div class="card-body px-3 py-4-5">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="stats-icon green">
+                                            <i class="bi bi-check2-square"></i>
+                                            <!--                                        <i class="iconly-boldAdd-User"></i>-->
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <h6 class="text-muted font-semibold">Ca khám thành công</h6>
+                                        <h6 class="font-extrabold mb-0" id="totalMedicalComplete">80.000</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-3 col-md-6">
+                        <div class="card">
+                            <div class="card-body px-3 py-4-5">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="stats-icon blue">
+                                            <i class="bi bi-hourglass-split"></i>
+                                            <!--                                        <i class="iconly-boldBookmark"></i>-->
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <h6 class="text-muted font-semibold">Ca khám đang chờ </h6>
+                                        <h6 class="font-extrabold mb-0" id="totalMedicalWait">112</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--  -->
+            <div class="card shadow mb-4">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Doanh thu theo tháng</h4>
+                            </div>
+                            <div class="card-body">
+                                <div id="chart-profile-visit-test"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow mb-4">
+                <div class="row">
+                    <div class="col-12 col-xl-8">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Doanh thu so sanh</h4>
+                            </div>
+                            <div class="card-body">
+                                <div id="chart-area-two"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-xl-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Visitors Profile</h4>
+                            </div>
+                            <div class="card-body">
+                                <div id="chart-visitors-profile-test"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tableReport" style="display: none">
+
+            <div class="card shadow mb-4">
+                <div class="row">
+                    <div class="col-12 col-xl-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="form-group">
+                                    <h5>Tổng doanh thu:</h5>
+                                    <p id="totalPrice" style="font-size: 19px;"></p>
+                                    <h5>Tổng số ca khám:</h5>
+                                    <p id="totalMedicalTable" style="font-size: 19px;"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-xl-6" id="chartDonutTableContainer" style="display: none">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Doanh thu theo hình thức khám bệnh</h4>
+                            </div>
+                            <div class="card-body">
+                                <div id="chartDonutTable"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow mb-4">
+                <div class="card-body">
+
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="dataTable" width="100%"
+                               cellspacing="0">
+                            <thead>
+                            <tr>
+                                <th><label class="d-flex justify-content-center" id="title">Thể loại</label></th>
+                                <th><label class="d-flex justify-content-center">Tổng số ca khám</label></th>
+                                <th><label class="d-flex justify-content-center">Doanh thu</label></th>
+                            </tr>
+                            </thead>
+                            <tbody id="tableContent">
+                            </tbody>
+                        </table>
+                        <div id="notHasReport">
+                            <div class="col-12 col-xl-12 d-flex align-items-center justify-content-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-graph-up-arrow" viewBox="0 0 16 16"
+                                     style="width: 15%; height: 80%; opacity: 0.3">
+                                    <path fill-rule="evenodd"
+                                          d="M0 0h1v15h15v1H0V0Zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5Z"/>
+                                </svg>
+                            </div>
+                            </br>
+                            <p class="col-12 col-xl-12 d-flex align-items-center justify-content-center">Chưa có doanh
+                                thu trong khoảng thời gian này
+                            <p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<script layout:fragment="js"
+        th:src="@{/admin/assets/js/salesReport.js}"></script>
+</body>
+
+</html>

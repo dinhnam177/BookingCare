@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/masterLayout.html}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Manager User</title>
+</head>
+<body>
+<section class="row" layout:fragment="content">
+    <div class="container-fluid">
+        <!--  -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-4 d-flex flex-row-reverse">
+                <div class="card-body">
+                    <!--  -->
+
+                    <form action="" method="GET" id="formPagination">
+                        <div class="row">
+
+                            <div class="col-md-4 col-12">
+                                <div class="form-group">
+                                    <label for="fullName">Tên người dùng</label> <input
+                                        type="text" id="fullName" class="form-control"
+                                        name="name" placeholder="Tên người dùng" th:value="${formSearch.name}">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-12">
+                                <div class="form-group">
+                                    <label for="searchHospitalId">Bệnh viện</label> <select
+                                        name="hospitalId" class="form-control"
+                                        id="searchHospitalId">
+                                    <option value="" selected>Chọn Bệnh viện</option>
+                                    <th:block th:each="itemHospital : ${lstHospital}">
+
+                                        <th:block th:if="${itemHospital.id} ==${formSearch.hospitalId}">
+                                            <option selected th:value="${itemHospital.id}"
+                                                    th:utext="${itemHospital.name}"></option>
+                                        </th:block>
+
+                                        <th:block th:unless="${itemHospital.id} == ${formSearch.hospitalId}">
+                                            <option th:value="${itemHospital.id}"
+                                                    th:utext="${itemHospital.name}"></option>
+                                        </th:block>
+
+                                    </th:block>
+
+                                </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-12">
+                                <div class="form-group">
+                                    <label for="searchSpecializedId">Chọn chuyên khoa</label> <select
+                                        name="specializedId" class="form-control"
+                                        id="searchSpecializedId">
+                                    <option value="" selected>Chọn chuyên khoa</option>
+                                    <th:block th:each="itemSpecialized : ${lstSpecialized}">
+
+                                        <th:block th:if="${itemSpecialized.id} ==${formSearch.specializedId}">
+                                            <option selected th:value="${itemSpecialized.id}"
+                                                    th:utext="${itemSpecialized.name}"></option>
+                                        </th:block>
+
+                                        <th:block th:unless="${itemSpecialized.id} == ${formSearch.specializedId}">
+                                            <option th:value="${itemSpecialized.id}"
+                                                    th:utext="${itemSpecialized.name}"></option>
+                                        </th:block>
+
+                                    </th:block>
+
+                                </select>
+                                </div>
+                            </div>
+                            <input type="hidden" id="page" name="page"/> <input
+                                type="hidden" th:value="${curentPage}" id="curentPage"/>
+                            <button id="search" class="btn btn-primary">Tìm
+                                kiếm
+                            </button>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--  -->
+        <div class="card shadow mb-4">
+
+            <div class="card-header py-4 d-flex flex-row-reverse">
+
+                <form method="POST" action="" enctype="multipart/form-data"
+                      id="uploadUser">
+
+                    <button type="button" style="width: 60px;" class="btn btn-primary"
+                            title="Thêm mới người dùng"
+                            data-toggle="modal" data-target="#exampleModal" id="btnAddUser">
+							<span> <i class="fa fa-plus-circle bigger-110 purple"></i>
+							</span>
+                    </button>
+
+                    <button type="button" style="width: 60px;" class="btn btn-primary"
+                            title="Chi tiết người dùng"
+                            data-toggle="modal" data-target="#exampleModal" id="btnDetail">
+                        <span> <i class="bi bi-eye"></i>
+							</span>
+                    </button>
+
+                    <button style="width: 60px;" id="btnDelete" type="button"
+                            class="dt-button buttons-html5 btn btn-white btn-primary btn-bold"
+                            data-toggle="modal" data-target="#dialogConfirmDelete" title='Xóa người dùng'>
+							<span> <i class="far fa-trash-alt"></i>
+							</span>
+                    </button>
+                    <!-- Modal -->
+
+                    <div class="modal fade" id="exampleModal" tabindex="-1"
+                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-xl" role="document">
+                            <div class="modal-content">
+
+                                <div class="modal-body">
+                                    <div class="row match-height">
+                                        <div class="col-12">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h4 class="card-title">Thông tin người dùng</h4>
+                                                </div>
+                                                <div class="card-content">
+                                                    <div class="card-body">
+
+                                                        <div class="row">
+                                                            <div class="col-md-6 col-12">
+                                                                <div class="form-group">
+                                                                    <label for="fullname">Họ và tên</label>
+                                                                    <input
+                                                                            type="text" class="form-control"
+                                                                            placeholder="First Name" name="fullname"
+                                                                            id="fullname">
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6 col-12">
+                                                                <div class="form-group">
+                                                                    <label for="showImage">Ảnh đại diện</label>
+                                                                    <img
+                                                                            style="display: block; margin-left: auto; width: 25%; margin-right: auto;"
+                                                                            class="product__item-img" id="showImage"
+                                                                            src="">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6 col-12">
+                                                                <div class="form-group">
+                                                                    <label for="username">Tài khoản</label> <input
+                                                                        type="text" id="username" class="form-control"
+                                                                        placeholder="Tài khoản" name="username">
+                                                                    <div id="msg"></div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6 col-12">
+                                                                <div class="form-group">
+                                                                    <label for="img">Ảnh đại diện</label>
+                                                                    <input
+                                                                            type="file" id="img" class="form-control"
+                                                                            placeholder="Last Name" name="img">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6 col-12">
+                                                                <div class="form-group">
+                                                                    <label for="password">Mật khẩu</label> <input
+                                                                        type="password" id="password"
+                                                                        class="form-control"
+                                                                        name="password" placeholder="Mật khẩu">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6 col-12">
+                                                                <div class="form-group">
+                                                                    <label for="phoneNumber">Số điện thoại</label>
+                                                                    <input
+                                                                            type="text" id="phoneNumber"
+                                                                            class="form-control"
+                                                                            name="phoneNumber"
+                                                                            placeholder="Số điện thoại">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6 col-12">
+                                                                <div class="form-group">
+                                                                    <label for="confirmPassword">Xác thực mật
+                                                                        khẩu</label>
+                                                                    <input type="password" id="confirmPassword"
+                                                                           class="form-control" name="confirmPassword"
+                                                                           placeholder="Xác thực mật khẩu">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-6 col-12">
+                                                                <div class="form-group">
+                                                                    <label for="location">Địa chỉ</label> <input
+                                                                        type="text" id="location" class="form-control"
+                                                                        name="location" placeholder="Địa chỉ">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3 col-4">
+                                                                <div class="form-group">
+                                                                    <label for="sex">Giới tính</label>
+                                                                    <select
+                                                                            name="sex" class="form-control required"
+                                                                            id="sex">
+                                                                        <option value="" selected>Chọn giới tính
+                                                                        </option>
+                                                                        <option value="Nam">Nam</option>
+                                                                        <option value="Nữ">Nữ</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3 col-4">
+                                                                <div class="form-group">
+                                                                    <label for="specializedId">Chọn chuyên khoa</label>
+                                                                    <select
+                                                                            name="specializedId" class="form-control"
+                                                                            id="specializedId">
+                                                                        <option value="" selected>Chọn chuyên khoa
+                                                                        </option>
+                                                                        <th:block
+                                                                                th:each="itemSpecialized : ${lstSpecialized}">
+                                                                            <option th:value="${itemSpecialized.id}"
+                                                                                    th:utext="${itemSpecialized.name}"></option>
+                                                                        </th:block>
+
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3 col-14">
+                                                                <div class="form-group">
+                                                                    <label for="yearOfBirth">Ngày sinh</label>
+                                                                    <input
+                                                                            type="date" id="yearOfBirth"
+                                                                            class="form-control"
+                                                                            name="yearOfBirth" placeholder="Ngày sinh">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3 col-14">
+                                                                <div class="form-group">
+                                                                    <label for="roleName">Chức năng</label>
+                                                                    <select
+                                                                            name="roleName" class="form-control"
+                                                                            id="roleName">
+                                                                        <option value="" selected>Chọn chức năng
+                                                                        </option>
+                                                                        <th:block th:each="itemRole : ${lstRole}">
+
+                                                                            <option th:value="${itemRole.name}"
+                                                                                    th:utext="${itemRole.name}"></option>
+                                                                        </th:block>
+
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-6 col-14">
+                                                                <div class="form-group">
+                                                                    <label for="email">Email</label> <input
+                                                                        type="email" id="email" class="form-control"
+                                                                        name="email" placeholder="Email" required
+                                                                        pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6 col-14">
+                                                                <div class="form-group">
+                                                                    <label for="hospitalId">Bệnh viện</label>
+                                                                    <select
+                                                                            name="hospitalId" class="form-control"
+                                                                            id="hospitalId">
+                                                                        <option value="" selected>Chọn Bệnh viện
+                                                                        </option>
+                                                                        <th:block
+                                                                                th:each="itemHospital : ${lstHospital}">
+
+                                                                            <option th:value="${itemHospital.id}"
+                                                                                    th:utext="${itemHospital.name}"></option>
+                                                                        </th:block>
+
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6 col-14">
+                                                                <div class="form-group">
+                                                                    <label for="examinationPrice">Giá khám</label>
+                                                                    <input
+                                                                            type="number" id="examinationPrice"
+                                                                            class="form-control"
+                                                                            name="examinationPrice"
+                                                                            placeholder="Giá khám" required
+                                                                    >
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-12 col-24">
+                                                                <div class="form-group">
+                                                                    <label for="inlineCheckbox1">Chọn ca khám</label>
+                                                                    <th:block
+                                                                            th:each="itemlstWorkTime : ${lstWorkTime}">
+                                                                        <div class="form-check form-check-inline">
+                                                                            <input class="form-check-input checkWorkTime"
+                                                                                   type="checkbox" name="workTimeId"
+                                                                                   id="inlineCheckbox1"
+                                                                                   th:value="${itemlstWorkTime.id}">
+                                                                            <label
+                                                                                    th:utext="${itemlstWorkTime.time}"
+                                                                                    class="form-check-label "
+                                                                                    for="inlineCheckbox1"></label>
+                                                                        </div>
+                                                                    </th:block>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-12 col-24">
+                                                                <div class="form-group">
+                                                                    <label for="shortDescription">Mô tả ngắn</label>
+                                                                    <textarea rows="12" cols="auto" class="form-control"
+                                                                              name="shortDescription"
+                                                                              id="shortDescription"></textarea>
+
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-12 col-24">
+                                                                <div class="form-group">
+                                                                    <label for="description">Mô tả</label>
+                                                                    <textarea rows="12" cols="auto" class="form-control"
+                                                                              name="description"
+                                                                              id="description"></textarea>
+
+                                                                </div>
+                                                            </div>
+
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Close
+                                    </button>
+
+                                    <button type="button" id="addUser" class="btn btn-primary">Thêm
+                                        người dùng
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </form>
+            </div>
+
+
+            <div class="card-body">
+                <!--  -->
+
+                <div class="table-responsive">
+                    <table class="table table-striped" id="dataTable" width="100%"
+                           cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th class="check-box min-width"
+                                style="padding-left: 12px; padding-top: 10px; width: 7%">
+                                <label class="d-flex justify-content-center">Chọn tất
+                                    cả</label>
+                                <div style="display: flex;">
+
+                                    <input class="d-flex justify-content-center" type="checkbox"
+                                           style="margin: auto;" name="selectBox" id="checkAll">
+                                </div>
+                            </th>
+                            <th><label class="d-flex justify-content-center">Tên
+                                người dùng</label></th>
+                            <th><label class="d-flex justify-content-center">Tài
+                                khoản</label></th>
+                            <th><label class="d-flex justify-content-center">Hình
+                                đại diện</label></th>
+                            <th><label class="d-flex justify-content-center">Số
+                                điện thoại</label></th>
+
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <th:block th:each="itemlstUser : ${lstUser}">
+                            <tr>
+                                <td class="d-flex justify-content-center get " style="padding: 45px 0 45px 0"><input
+                                        id="checkOne" name="checkOne" type="checkbox"
+                                        th:value="${itemlstUser.id}"></td>
+
+                                <td style="text-align: center;"
+                                    th:utext="${itemlstUser.name}">>
+                                </td>
+                                <td style="text-align: center;"
+                                    th:utext="${itemlstUser.username}">>
+                                </td>
+                                <td style="text-align: center; width: 25%;"><img
+                                        style="display: block; margin-left: auto; width: 25%; margin-right: auto;"
+                                        class="product__item-img" th:src="${itemlstUser.img}"/></td>
+
+                                <td style="text-align: center;"
+                                    th:utext="${itemlstUser.phone}"></td>
+                                <td style="display: none; visibility: hidden; width: 0px !important; height: 0px !important;"
+                                    th:utext="${itemlstUser.hospitalId}"></td>
+                                <td style="display: none; visibility: hidden; width: 0px !important; height: 0px !important;"
+                                    th:utext="${itemlstUser.specializedId}"></td>
+                                <td style="display: none; visibility: hidden; width: 0px !important; height: 0px !important;"
+                                    th:utext="${itemlstUser.email}"></td>
+                                <td style="display: none; visibility: hidden; width: 0px !important; height: 0px !important;"
+                                    th:utext="${itemlstUser.img}"></td>
+                                <td style="display: none; visibility: hidden; width: 0px !important; height: 0px !important;"
+                                    th:utext="${itemlstUser.yearOfBirth}"></td>
+                                <td style="display: none; visibility: hidden; width: 0px !important; height: 0px !important;"
+                                    th:utext="${itemlstUser.location}"></td>
+                                <td style="display: none; visibility: hidden; width: 0px !important; height: 0px !important;"
+                                    th:utext="${itemlstUser.sex}"></td>
+                                <td style="display: none; visibility: hidden; width: 0px !important; height: 0px !important;"
+                                    th:utext="${itemlstUser.examinationPrice}"></td>
+                                <td style="display: none; visibility: hidden; width: 0px !important; height: 0px !important;"
+                                    th:utext="${itemlstUser.role}"></td>
+                                <td style="display: none; visibility: hidden; width: 0px !important; height: 0px !important;"
+                                    th:utext="${itemlstUser.getLstWorkTime()}"></td>
+                                <input name="id" type="hidden" id="shortDescriptionHtml"
+                                       th:value="${itemlstUser.shortDescription}">
+                                <input name="id" type="hidden" id="descriptionHtml"
+                                       th:value="${itemlstUser.description}">
+                                <th:block th:each="itemWk : ${itemlstUser.getLstWorkTime()}">
+                                    <input name="id" type="hidden" class="workTimeIdHidden"
+                                           th:value="${itemWk.id}">
+                                </th:block>
+
+                            </tr>
+                        </th:block>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="container d-flex align-items-center justify-content-center">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination" id="pagination"></ul>
+                    </nav>
+                </div>
+                <!--  -->
+
+            </div>
+        </div>
+
+    </div>
+    <div class="modal fade" id="ok" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Thông báo</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Thao tác thành công</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal fade" id="dialogConfirmDelete" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Thông báo</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Bạn chắc chắn muốn xoá chứ</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btnConfirmDelete" data-dismiss="modal">Xoá
+                    </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Huỷ</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <input type="hidden" th:value="${totalPage}" id="totalPage"/>
+</section>
+
+<script layout:fragment="js"
+        th:src="@{/admin/assets/js/managerUser.js}"></script>
+</body>
+
+</html>
