@@ -16,16 +16,14 @@ public class CustomUserRepositoryImpl implements CustomUserRepository{
 
     @Override
     public List<UserFeaturedDto> getFeaturedUser() {
-        StringBuilder sql = new StringBuilder("SELECT u.id as userId, count(m.doctor_id) as total ");
-        sql.append(" FROM");
-        sql.append(" bookingCare.user u ");
-        sql.append(" INNER JOIN user_role ur ON ");
-        sql.append(" u.id = ur.user_id");
-        sql.append(" LEFT JOIN medical_examination_schedule m");
-        sql.append(" ON u.id = m.doctor_id WHERE ur.role_id = 2");
-        sql.append(" GROUP BY userId");
-        sql.append(" ORDER BY total DESC LIMIT 6");
-        Query query = entityManager.createNativeQuery(sql.toString());
+        String sql = "SELECT u.id AS id, COUNT(*) AS total " +
+                "FROM medical_examination_schedule AS m " +
+                "INNER JOIN user AS u ON m.doctor_id = u.id " +
+                "GROUP BY u.id " +
+                "HAVING COUNT(*) > 1 " +
+                "ORDER BY total DESC " +
+                "LIMIT 6";
+        Query query = entityManager.createNativeQuery(sql);
         List<UserFeaturedDto> userFeaturedDtos = (List<UserFeaturedDto>) query.getResultList()
                 .stream()
                 .map( item -> {

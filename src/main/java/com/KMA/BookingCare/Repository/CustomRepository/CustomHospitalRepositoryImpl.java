@@ -19,16 +19,13 @@ public class CustomHospitalRepositoryImpl implements CustomHospitalRepository{
 
     @Override
     public List<HospitalFeaturedDto> getFeaturedHospital() {
-        StringBuilder sql = new StringBuilder("SELECT h.id as hospital_id ,count(hospital_id) as total");
-        sql.append(" FROM");
-        sql.append(" bookingCare.hospital h LEFT JOIN (");
-        sql.append(" SELECT u.hospital_id as hospital_id, m.id as m_id");
-        sql.append(" FROM");
-        sql.append(" medical_examination_schedule m inner join");
-        sql.append(" bookingCare.user u ON u.id = m.doctor_id) AS tbn ON h.id = tbn.hospital_id ");
-        sql.append(" GROUP BY h.id");
-        sql.append(" ORDER BY total DESC LIMIT 6");
-        Query query = entityManager.createNativeQuery(sql.toString());
+        String sql = "SELECT h.id AS id, COUNT(*) AS total " +
+                "FROM medical_examination_schedule AS m " +
+                "INNER JOIN hospital AS h ON m.hospital_name = h.name " +
+                "GROUP BY h.id " +
+                "HAVING COUNT(*) > 1 " +
+                "ORDER BY total DESC LIMIT 6";
+        Query query = entityManager.createNativeQuery(sql);
         List<HospitalFeaturedDto> hospitalFeaturedDtos = (List<HospitalFeaturedDto>) query.getResultList()
                 .stream()
                 .map( item -> {

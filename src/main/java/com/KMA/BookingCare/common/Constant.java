@@ -29,9 +29,9 @@ public class Constant {
 
     public static final Integer OFFSET_DEFAULT = 0;
 
-    public static final String vnp_TmnCode = "ZF7UBU1W";
+    public static final String vnp_TmnCode = "L41DGV71";
 
-    public static final String vnp_HashSecret = "UJNHGYEOIOIJYVMVFNHFHAAZZDBNBDIR";
+    public static final String vnp_HashSecret = "5V7J4W7ZNV8FFDCL7M6HM6B4RWJSAYPF";
 
     public static final String vnp_Version = "2.1.0";
 

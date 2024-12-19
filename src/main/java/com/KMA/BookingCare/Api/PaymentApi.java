@@ -34,11 +34,14 @@ public class PaymentApi {
     public ResponseEntity<?> createPayment(@RequestBody PaymentForm form) throws UnsupportedEncodingException {
         String vnp_Version = "2.1.0";
         String vnp_Command = "pay";
+        String orderType = "other";
+        long amount = form.getAmount()*100;
+        String bankCode = form.getBankCode();
 
-        String vnp_TxnRef = String.valueOf(System.currentTimeMillis());
+        String vnp_TxnRef = getRandomNumber(8);
         String vnp_IpAddr = "vnp_IpAddr";
+
         String vnp_TmnCode = Constant.vnp_TmnCode;
-        Integer amount = form.getAmount() * 100;
 
         Map<String, String> vnp_Params = new HashMap<>();
         vnp_Params.put("vnp_Version", vnp_Version);
@@ -47,13 +50,15 @@ public class PaymentApi {
         vnp_Params.put("vnp_Amount", String.valueOf(amount));
         vnp_Params.put("vnp_CurrCode", "VND");
 
-        if (!Strings.isBlank(form.getBankCode())) {
-            vnp_Params.put("vnp_BankCode", form.getBankCode());
+        if (bankCode != null && !bankCode.isEmpty()) {
+            vnp_Params.put("vnp_BankCode", bankCode);
         }
         vnp_Params.put("vnp_TxnRef", vnp_TxnRef);
         vnp_Params.put("vnp_OrderInfo", "Thanh toan don hang:" + vnp_TxnRef);
-        vnp_Params.put("vnp_Locale", Constant.vnp_Locale);
-        vnp_Params.put("vnp_ReturnUrl", domain + Constant.vnp_ReturnUrl);
+        vnp_Params.put("vnp_OrderType", orderType);
+
+        vnp_Params.put("vnp_Locale", "vn");
+        vnp_Params.put("vnp_ReturnUrl", Constant.vnp_ReturnUrl);
         vnp_Params.put("vnp_IpAddr", vnp_IpAddr);
 
         Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));
@@ -72,7 +77,7 @@ public class PaymentApi {
         Iterator itr = fieldNames.iterator();
         while (itr.hasNext()) {
             String fieldName = (String) itr.next();
-            String fieldValue = vnp_Params.get(fieldName);
+            String fieldValue = (String) vnp_Params.get(fieldName);
             if ((fieldValue != null) && (fieldValue.length() > 0)) {
                 //Build hash data
                 hashData.append(fieldName);
@@ -116,6 +121,16 @@ public class PaymentApi {
             response.put("data", paymentService.save(form));
         }
         return ResponseEntity.ok(response);
+    }
+
+    public static String getRandomNumber(int len) {
+        Random rnd = new Random();
+        String chars = "0123456789";
+        StringBuilder sb = new StringBuilder(len);
+        for (int i = 0; i < len; i++) {
+            sb.append(chars.charAt(rnd.nextInt(chars.length())));
+        }
+        return sb.toString();
     }
 
 
