@@ -1,16 +1,12 @@
 package com.KMA.BookingCare.Repository.CustomRepository;
 
-import com.KMA.BookingCare.Dto.HospitalDto;
 import com.KMA.BookingCare.Dto.HospitalFeaturedDto;
-import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.math.BigInteger;
-import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class CustomHospitalRepositoryImpl implements CustomHospitalRepository{
